@@ -1,14 +1,10 @@
 package com.github.legacycode.core.customer;
 
-public final class GenderId {
+import lombok.Value;
 
-   private final String value;
+@Value
+public class GenderId {
 
-    public GenderId(String value) {
-        this.value = value;
-    }
+    String value;
 
-    public String getValue() {
-        return value;
-    }
 }

@@ -2,7 +2,8 @@ module boxshop.core {
     
     requires java.base;
     requires java.sql;
-    
+    requires lombok;
+
     exports com.github.legacycode.core;
     exports com.github.legacycode.core.common;
     exports com.github.legacycode.core.customer;

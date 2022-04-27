@@ -1,7 +1,7 @@
 package com.github.legacycode.jakarta.persistence;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
+import java.util.UUID;
 
 import com.github.legacycode.core.LegacyCode;
 
@@ -25,21 +25,11 @@ interface EntityMapper<E, D> {
         return (Class<D>) genericType.getActualTypeArguments()[1];
     }
 
-    default E findReference(Object key) {
+    default <X> X findReference(Class<X> entityClass, UUID key) {
         var dao = LegacyCode.getCurrentContext().get(DynamicDAO.class);
         return dao
-                .findReference(getEntityClass(), key)
-                .orElseGet(this::newInstance);
-
+                .findReference(entityClass, key)
+                .orElse(null);
     }
 
-    private E newInstance() {
-        var entityClass = getEntityClass();
-        try {
-            return entityClass.getDeclaredConstructor().newInstance();
-        } catch (InstantiationException | NoSuchMethodException | IllegalAccessException |
-                 InvocationTargetException ex) {
-            throw new IllegalStateException(ex);
-        }
-    }
 }

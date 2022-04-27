@@ -1,14 +1,10 @@
 package com.github.legacycode.core.customer;
 
-public final class Email {
+import lombok.Value;
 
-   private final String value;
+@Value
+public class Email {
 
-    public Email(String value) {
-        this.value = value;
-    }
+    String value;
 
-    public String getValue() {
-        return value;
-    }
 }

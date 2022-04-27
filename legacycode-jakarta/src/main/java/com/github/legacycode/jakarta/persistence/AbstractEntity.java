@@ -8,16 +8,27 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
 
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.experimental.FieldDefaults;
+
+@FieldDefaults(level = AccessLevel.PROTECTED)
+@Getter
+@Setter
+@ToString
+
 @MappedSuperclass
 public abstract class AbstractEntity implements Serializable {
 
     @Id
     @Column(name = "id", nullable = false, unique = true, columnDefinition = "VARCHAR(36)")
-    protected UUID id;
+    UUID id;
 
     @Version
     @Column(name = "version", nullable = false, unique = true)
-    protected Long version;
+    Long version;
 
     protected AbstractEntity() {
         this.id = UUID.randomUUID();
@@ -44,19 +55,5 @@ public abstract class AbstractEntity implements Serializable {
         return Objects.hash(id, version);
     }
 
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public Long getVersion() {
-        return version;
-    }
-
-    public void setVersion(Long version) {
-        this.version = version;
-    }
 }
+

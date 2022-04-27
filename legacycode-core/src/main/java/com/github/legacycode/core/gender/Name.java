@@ -1,14 +1,10 @@
 package com.github.legacycode.core.gender;
 
-public final class Name {
+import lombok.Value;
 
-   private final String value;
+@Value
+public class Name {
 
-    public Name(String value) {
-        this.value = value;
-    }
+    String value;
 
-    public String getValue() {
-        return value;
-    }
 }

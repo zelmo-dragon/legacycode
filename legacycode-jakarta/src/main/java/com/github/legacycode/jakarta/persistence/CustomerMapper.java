@@ -1,7 +1,10 @@
 package com.github.legacycode.jakarta.persistence;
 
+import java.util.Optional;
+
 import com.github.legacycode.core.customer.Customer;
 import com.github.legacycode.core.customer.Email;
+import com.github.legacycode.core.customer.GenderId;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
@@ -19,12 +22,19 @@ public interface CustomerMapper extends EntityMapper<CustomerEntity, Customer> {
     @Override
     void updateEntity(Customer data, @MappingTarget CustomerEntity entity);
 
-
     default String map(Email email) {
-        return email.getValue();
+        return Optional
+                .ofNullable(email)
+                .map(Email::getValue)
+                .orElse(null);
     }
 
     default Email map(String value) {
         return new Email(value);
+    }
+
+    default GenderEntity map(GenderId value) {
+
+        return null;
     }
 }

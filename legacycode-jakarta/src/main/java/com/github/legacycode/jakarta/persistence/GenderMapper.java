@@ -1,5 +1,7 @@
 package com.github.legacycode.jakarta.persistence;
 
+import java.util.Optional;
+
 import com.github.legacycode.core.gender.Gender;
 import com.github.legacycode.core.gender.Name;
 import org.mapstruct.InheritInverseConfiguration;
@@ -20,7 +22,10 @@ public interface GenderMapper extends EntityMapper<GenderEntity, Gender> {
     void updateEntity(Gender data, @MappingTarget GenderEntity entity);
 
     default String map(Name name) {
-        return name.getValue();
+        return Optional
+                .ofNullable(name)
+                .map(Name::getValue)
+                .orElse(null);
     }
 
     default Name map(String value) {
