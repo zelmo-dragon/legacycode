@@ -4,6 +4,7 @@ import com.github.legacycode.core.customer.Customer;
 import com.github.legacycode.core.customer.CustomerRepository;
 import com.github.legacycode.core.customer.Email;
 import com.github.legacycode.core.customer.GenderId;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -183,9 +184,9 @@ public final class CustomerDAO implements CustomerRepository {
                 entity = new Customer(
                         givenName,
                         familyName,
+                        phoneNumber,
                         new Email(email),
-                        new GenderId(genderId),
-                        phoneNumber
+                        new GenderId(genderId)
                 );
 
             } else {

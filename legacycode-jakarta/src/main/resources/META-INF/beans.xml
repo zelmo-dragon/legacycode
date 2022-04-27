@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    CDI 3.0
+
+    Fichier de configuration de CDI.
+    Ce fichier même vide est requis pour le fonctionnement nominal
+    de cette technologie.
+    La configuration est réalisée par les annotations.
+    Mais certaines configurations nécessitent d'être déclarées
+    en XML dans ce fichier.
+-->
+<beans
+        xmlns="https://jakarta.ee/xml/ns/jakartaee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/beans_3_0.xsd"
+        version="3.0"
+        bean-discovery-mode="annotated">
+
+</beans>
+

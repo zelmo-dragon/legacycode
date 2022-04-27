@@ -48,6 +48,7 @@
     <modules>
         <module>legacycode-core</module>
         <module>legacycode-util</module>
+        <module>legacycode-jakarta</module>
     </modules>
 
     <properties>
@@ -57,8 +58,10 @@
         <!-- Version des dépendances -->
         <version.java>17</version.java>
         <version.jakarta>9.1.0</version.jakarta>
-        <version.microprofile>5.0</version.microprofile>
         <version.junit>5.8.2</version.junit>
+        <version.eclipselink>3.0.2</version.eclipselink>
+        <version.mapstruct>1.4.2.Final</version.mapstruct>
+        <version.lombok>1.18.22</version.lombok>
 
         <!-- Configuration -->
         <maven.compiler.source>${version.java}</maven.compiler.source>
@@ -67,7 +70,7 @@
 
     <dependencyManagement>
         <dependencies>
-            <!-- Jakarta EE -->
+            <!-- Jakarta Platform -->
             <dependency>
                 <groupId>jakarta.platform</groupId>
                 <artifactId>jakarta.jakartaee-api</artifactId>
@@ -79,7 +82,21 @@
                 <version>${version.jakarta}</version>
             </dependency>
 
-            <!-- MicroProfile -->
+            <dependency>
+                <groupId>org.eclipse.persistence</groupId>
+                <artifactId>org.eclipse.persistence.jpa.modelgen.processor</artifactId>
+                <version>${version.eclipselink}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct</artifactId>
+                <version>${version.mapstruct}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${version.lombok}</version>
+            </dependency>
 
             <!-- Junit -->
             <dependency>
