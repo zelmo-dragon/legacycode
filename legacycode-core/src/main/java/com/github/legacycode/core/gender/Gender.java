@@ -2,13 +2,26 @@ package com.github.legacycode.core.gender;
 
 import com.github.legacycode.core.Identifiable;
 
-public record Gender(
-        Name name, 
-        String description) implements Identifiable<Name> {
+public final class Gender implements Identifiable<Name> {
+    private final Name name;
+
+    private final String description;
+
+    public Gender(Name name, String description) {
+        this.name = name;
+        this.description = description;
+    }
 
     @Override
     public Name getBusinessKey() {
         return this.name;
     }
 
+    public Name getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
 }

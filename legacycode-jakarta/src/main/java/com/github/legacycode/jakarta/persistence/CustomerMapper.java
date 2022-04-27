@@ -1,48 +1,30 @@
 package com.github.legacycode.jakarta.persistence;
 
-import java.io.Serializable;
-import jakarta.enterprise.context.Dependent;
-import jakarta.inject.Inject;
-
 import com.github.legacycode.core.customer.Customer;
 import com.github.legacycode.core.customer.Email;
-import com.github.legacycode.core.customer.GenderId;
+import org.mapstruct.InheritInverseConfiguration;
+import org.mapstruct.Mapper;
+import org.mapstruct.MappingTarget;
 
-@Dependent
-public class CustomerMapper implements EntityMapper<CustomerEntity, Customer>, Serializable {
-
-    private final GenderMapper genderMapper;
-
-    @Inject
-    public CustomerMapper(GenderMapper genderMapper) {
-        this.genderMapper = genderMapper;
-    }
+@Mapper(componentModel = "cdi", uses = GenderMapper.class)
+public interface CustomerMapper extends EntityMapper<CustomerEntity, Customer> {
 
     @Override
-    public CustomerEntity toEntity(Customer data) {
-        var entity = new CustomerEntity();
-        this.updateEntity(data, entity);
-        return entity;
-    }
+    CustomerEntity toEntity(Customer data);
+
+    @InheritInverseConfiguration(name = "toEntity")
+    @Override
+    Customer fromEntity(CustomerEntity entity);
 
     @Override
-    public Customer fromEntity(CustomerEntity entity) {
-        return new Customer(
-                entity.getGivenName(),
-                entity.getFamilyName(),
-                entity.getPhoneNumber(),
-                new Email(entity.getEmail()),
-                new GenderId(entity.getGender().getName())
-        );
+    void updateEntity(Customer data, @MappingTarget CustomerEntity entity);
+
+
+    default String map(Email email) {
+        return email.getValue();
     }
 
-    @Override
-    public void updateEntity(Customer data, CustomerEntity entity) {
-        var gender = this.genderMapper.findReference(entity.getGender().getId());
-        entity.setGivenName(data.givenName());
-        entity.setFamilyName(data.familyName());
-        entity.setPhoneNumber(data.phoneNumber());
-        entity.setEmail(data.email().value());
-        entity.setGender(gender);
+    default Email map(String value) {
+        return new Email(value);
     }
 }

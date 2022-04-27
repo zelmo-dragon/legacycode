@@ -1,7 +1,7 @@
 package com.github.legacycode.jakarta;
 
 
-import jakarta.enterprise.inject.spi.CDI;
+import javax.enterprise.inject.spi.CDI;
 
 import com.github.legacycode.core.LegacyCode;
 

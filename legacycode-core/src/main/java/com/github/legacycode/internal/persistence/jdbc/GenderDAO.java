@@ -21,7 +21,7 @@ public final class GenderDAO implements GenderRepository {
 
         String query;
         Consumer<PreparedStatement> bind;
-        if (this.contains(entity.name())) {
+        if (this.contains(entity.getName())) {
 
             query = String.format(
                     "UPDATE %s SET %s = ?, %s = ? WHERE %s = ?",
@@ -105,8 +105,8 @@ public final class GenderDAO implements GenderRepository {
     private static void bindInsertParameter(PreparedStatement s, Gender e) {
         try {
             s.setObject(1, UUID.randomUUID().toString(), GenderColumn.ID.getPhysicalType());
-            s.setObject(2, e.name().value(), GenderColumn.NAME.getPhysicalType());
-            s.setObject(3, e.description(), GenderColumn.DESCRIPTION.getPhysicalType());
+            s.setObject(2, e.getName().getValue(), GenderColumn.NAME.getPhysicalType());
+            s.setObject(3, e.getDescription(), GenderColumn.DESCRIPTION.getPhysicalType());
         } catch (SQLException ex) {
             throw new IllegalStateException(ex);
         }
@@ -114,8 +114,8 @@ public final class GenderDAO implements GenderRepository {
 
     private static void bindUpdateParameter(PreparedStatement s, Gender e) {
         try {
-            s.setObject(1, e.name().value(), GenderColumn.NAME.getPhysicalType());
-            s.setObject(2, e.description(), GenderColumn.DESCRIPTION.getPhysicalType());
+            s.setObject(1, e.getName().getValue(), GenderColumn.NAME.getPhysicalType());
+            s.setObject(2, e.getDescription(), GenderColumn.DESCRIPTION.getPhysicalType());
         } catch (SQLException ex) {
             throw new IllegalStateException(ex);
         }
@@ -123,7 +123,7 @@ public final class GenderDAO implements GenderRepository {
 
     private static void bindCountParameter(final PreparedStatement s, final Name e) {
         try {
-            s.setObject(1, e.value(), GenderColumn.NAME.getPhysicalType());
+            s.setObject(1, e.getValue(), GenderColumn.NAME.getPhysicalType());
         } catch (SQLException ex) {
             throw new IllegalStateException(ex);
         }
@@ -140,7 +140,7 @@ public final class GenderDAO implements GenderRepository {
 
     private static void bindSelectParameter(final PreparedStatement s, final Name e) {
         try {
-            s.setObject(1, e.value(), GenderColumn.NAME.getPhysicalType());
+            s.setObject(1, e.getValue(), GenderColumn.NAME.getPhysicalType());
         } catch (SQLException ex) {
             throw new IllegalStateException(ex);
         }

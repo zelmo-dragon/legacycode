@@ -23,7 +23,7 @@ public final class CustomerDAO implements CustomerRepository {
 
         String query;
         Consumer<PreparedStatement> bind;
-        if (this.contains(entity.email())) {
+        if (this.contains(entity.getEmail())) {
 
             query = String.format(
                     "UPDATE %s SET %s = ?, %s = ?, %s = ?, %s = ?, %s = ? WHERE %s = ?",
@@ -122,11 +122,11 @@ public final class CustomerDAO implements CustomerRepository {
     private static void bindInsertParameter(PreparedStatement s, Customer e) {
         try {
             s.setObject(1, UUID.randomUUID().toString(), CustomerColumn.ID.getPhysicalType());
-            s.setObject(2, e.givenName(), CustomerColumn.GIVEN_NAME.getPhysicalType());
-            s.setObject(3, e.familyName(), CustomerColumn.FAMILY_NAME.getPhysicalType());
-            s.setObject(4, e.email().value(), CustomerColumn.EMAIL.getPhysicalType());
-            s.setObject(5, e.gender().value(), CustomerColumn.GENDER_ID.getPhysicalType());
-            s.setObject(6, e.phoneNumber(), CustomerColumn.PHONE_NUMBER.getPhysicalType());
+            s.setObject(2, e.getGivenName(), CustomerColumn.GIVEN_NAME.getPhysicalType());
+            s.setObject(3, e.getFamilyName(), CustomerColumn.FAMILY_NAME.getPhysicalType());
+            s.setObject(4, e.getEmail().getValue(), CustomerColumn.EMAIL.getPhysicalType());
+            s.setObject(5, e.getGender().getValue(), CustomerColumn.GENDER_ID.getPhysicalType());
+            s.setObject(6, e.getPhoneNumber(), CustomerColumn.PHONE_NUMBER.getPhysicalType());
         } catch (SQLException ex) {
             throw new IllegalStateException(ex);
         }
@@ -134,12 +134,12 @@ public final class CustomerDAO implements CustomerRepository {
 
     private static void bindUpdateParameter(PreparedStatement s, Customer e) {
         try {
-            s.setObject(1, e.givenName(), CustomerColumn.GIVEN_NAME.getPhysicalType());
-            s.setObject(2, e.familyName(), CustomerColumn.FAMILY_NAME.getPhysicalType());
-            s.setObject(3, e.email().value(), CustomerColumn.EMAIL.getPhysicalType());
-            s.setObject(4, e.gender().value(), CustomerColumn.GENDER_ID.getPhysicalType());
-            s.setObject(5, e.phoneNumber(), CustomerColumn.PHONE_NUMBER.getPhysicalType());
-            s.setObject(5, e.email().value(), CustomerColumn.EMAIL.getPhysicalType());
+            s.setObject(1, e.getGivenName(), CustomerColumn.GIVEN_NAME.getPhysicalType());
+            s.setObject(2, e.getFamilyName(), CustomerColumn.FAMILY_NAME.getPhysicalType());
+            s.setObject(3, e.getEmail().getValue(), CustomerColumn.EMAIL.getPhysicalType());
+            s.setObject(4, e.getGender().getValue(), CustomerColumn.GENDER_ID.getPhysicalType());
+            s.setObject(5, e.getPhoneNumber(), CustomerColumn.PHONE_NUMBER.getPhysicalType());
+            s.setObject(5, e.getEmail().getValue(), CustomerColumn.EMAIL.getPhysicalType());
         } catch (SQLException ex) {
             throw new IllegalStateException(ex);
         }
@@ -147,7 +147,7 @@ public final class CustomerDAO implements CustomerRepository {
 
     private static void bindKeyParameter(final PreparedStatement s, final Email e) {
         try {
-            s.setObject(1, e.value(), CustomerColumn.EMAIL.getPhysicalType());
+            s.setObject(1, e.getValue(), CustomerColumn.EMAIL.getPhysicalType());
         } catch (SQLException ex) {
             throw new IllegalStateException(ex);
         }
@@ -164,7 +164,7 @@ public final class CustomerDAO implements CustomerRepository {
 
     private static void bindSelectParameter(final PreparedStatement s, final Email e) {
         try {
-            s.setObject(1, e.value(), CustomerColumn.EMAIL.getPhysicalType());
+            s.setObject(1, e.getValue(), CustomerColumn.EMAIL.getPhysicalType());
         } catch (SQLException ex) {
             throw new IllegalStateException(ex);
         }

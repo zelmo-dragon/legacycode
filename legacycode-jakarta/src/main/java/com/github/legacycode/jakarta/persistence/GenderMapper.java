@@ -1,36 +1,29 @@
 package com.github.legacycode.jakarta.persistence;
 
-import java.io.Serializable;
-import jakarta.enterprise.context.Dependent;
-
 import com.github.legacycode.core.gender.Gender;
 import com.github.legacycode.core.gender.Name;
+import org.mapstruct.InheritInverseConfiguration;
+import org.mapstruct.Mapper;
+import org.mapstruct.MappingTarget;
 
-@Dependent
-public class GenderMapper implements EntityMapper<GenderEntity, Gender>, Serializable {
-
-    public GenderMapper() {
-    }
-
-    @Override
-    public GenderEntity toEntity(Gender data) {
-        var entity = new GenderEntity();
-        this.updateEntity(data, entity);
-        return entity;
-    }
+@Mapper(componentModel = "cdi")
+public interface GenderMapper extends EntityMapper<GenderEntity, Gender> {
 
     @Override
-    public Gender fromEntity(GenderEntity entity) {
+    GenderEntity toEntity(Gender data);
 
-        return new Gender(
-                new Name(entity.getName()),
-                entity.getDescription()
-        );
-    }
+    @InheritInverseConfiguration(name = "toEntity")
+    @Override
+    Gender fromEntity(GenderEntity entity);
 
     @Override
-    public void updateEntity(Gender data, GenderEntity entity) {
-        entity.setName(data.name().value());
-        entity.setDescription(data.description());
+    void updateEntity(Gender data, @MappingTarget GenderEntity entity);
+
+    default String map(Name name) {
+        return name.getValue();
+    }
+
+    default Name map(String value) {
+        return new Name(value);
     }
 }

@@ -2,9 +2,9 @@ package com.github.legacycode.jakarta.persistence;
 
 import java.io.Serializable;
 import java.util.Optional;
-import jakarta.enterprise.context.Dependent;
-import jakarta.inject.Inject;
-import jakarta.persistence.EntityManager;
+import javax.enterprise.context.Dependent;
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
 
 import com.github.legacycode.core.gender.Gender;
 import com.github.legacycode.core.gender.GenderRepository;

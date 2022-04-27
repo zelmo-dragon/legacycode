@@ -56,10 +56,10 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <!-- Version des dépendances -->
-        <version.java>17</version.java>
-        <version.jakarta>9.1.0</version.jakarta>
+        <version.java>11</version.java>
+        <version.jakarta>8.0.0</version.jakarta>
         <version.junit>5.8.2</version.junit>
-        <version.eclipselink>3.0.2</version.eclipselink>
+        <version.eclipselink>2.7.10</version.eclipselink>
         <version.mapstruct>1.4.2.Final</version.mapstruct>
         <version.lombok>1.18.22</version.lombok>
 
@@ -90,6 +90,11 @@
             <dependency>
                 <groupId>org.mapstruct</groupId>
                 <artifactId>mapstruct</artifactId>
+                <version>${version.mapstruct}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct-processor</artifactId>
                 <version>${version.mapstruct}</version>
             </dependency>
             <dependency>

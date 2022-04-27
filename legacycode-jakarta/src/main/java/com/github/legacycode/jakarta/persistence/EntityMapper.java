@@ -37,7 +37,8 @@ interface EntityMapper<E, D> {
         var entityClass = getEntityClass();
         try {
             return entityClass.getDeclaredConstructor().newInstance();
-        } catch (InstantiationException | NoSuchMethodException | IllegalAccessException | InvocationTargetException ex) {
+        } catch (InstantiationException | NoSuchMethodException | IllegalAccessException |
+                 InvocationTargetException ex) {
             throw new IllegalStateException(ex);
         }
     }

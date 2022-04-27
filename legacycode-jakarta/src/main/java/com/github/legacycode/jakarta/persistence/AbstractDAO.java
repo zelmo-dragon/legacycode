@@ -1,8 +1,9 @@
 package com.github.legacycode.jakarta.persistence;
 
 import java.util.Optional;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.TypedQuery;
+
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 
 import com.github.legacycode.core.Identifiable;
 import com.github.legacycode.core.Repository;
