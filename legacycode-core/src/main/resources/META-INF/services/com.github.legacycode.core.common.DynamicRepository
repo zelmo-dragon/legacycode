@@ -1,0 +1,2 @@
+com.github.legacycode.internal.persistence.collection.DynamicDAO
+com.github.legacycode.internal.persistence.jdbc.DynamicDAO

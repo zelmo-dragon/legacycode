@@ -7,16 +7,16 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.github.legacycode</groupId>
         <artifactId>legacycode</artifactId>
+        <groupId>com.github.legacycode</groupId>
         <version>0.0.1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>legacycode-util</artifactId>
+    <artifactId>legacycode-core</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <name>legacycode-util</name>
+    <name>legacycode-core</name>
 
     <properties>
 

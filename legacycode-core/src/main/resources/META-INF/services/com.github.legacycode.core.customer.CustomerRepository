@@ -1,0 +1,2 @@
+com.github.legacycode.internal.persistence.collection.CustomerDAO
+com.github.legacycode.internal.persistence.jdbc.CustomerDAO

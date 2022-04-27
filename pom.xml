@@ -46,6 +46,7 @@
     <name>legacycode</name>
 
     <modules>
+        <module>legacycode-core</module>
         <module>legacycode-util</module>
     </modules>
 
@@ -58,6 +59,10 @@
         <version.jakarta>9.1.0</version.jakarta>
         <version.microprofile>5.0</version.microprofile>
         <version.junit>5.8.2</version.junit>
+
+        <!-- Configuration -->
+        <maven.compiler.source>${version.java}</maven.compiler.source>
+        <maven.compiler.target>${version.java}</maven.compiler.target>
     </properties>
 
     <dependencyManagement>
@@ -110,8 +115,18 @@
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>3.2.2</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-war-plugin</artifactId>
                     <version>3.3.2</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-enforcer-plugin</artifactId>
+                    <version>3.0.0</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
