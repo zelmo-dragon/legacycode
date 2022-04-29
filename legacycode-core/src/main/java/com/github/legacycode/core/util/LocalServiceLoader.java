@@ -3,12 +3,16 @@ package com.github.legacycode.core.util;
 import java.lang.annotation.Annotation;
 import java.util.ServiceLoader;
 
+import com.github.legacycode.core.LegacyCodeException;
+
 public final class LocalServiceLoader {
 
     private LocalServiceLoader() {
     }
 
-    public static <S> S loadProvider(final Class<S> providerClass, final Class<? extends Annotation> annotation) {
+    public static <S> S loadProvider(
+            final Class<S> providerClass,
+            final Class<? extends Annotation> annotation) {
 
         return ServiceLoader
                 .load(providerClass)
@@ -16,7 +20,7 @@ public final class LocalServiceLoader {
                 .filter(p -> p.type().isAnnotationPresent(annotation))
                 .map(ServiceLoader.Provider::get)
                 .findFirst()
-                .orElseThrow(IllegalStateException::new);
+                .orElseThrow(() -> LegacyCodeException.PROVIDER_NOT_FOUND.apply(providerClass));
     }
 
     public static <S> S loadProvider(final Class<S> providerClass) {
@@ -26,6 +30,6 @@ public final class LocalServiceLoader {
                 .stream()
                 .map(ServiceLoader.Provider::get)
                 .findFirst()
-                .orElseThrow(IllegalStateException::new);
+                .orElseThrow(() -> LegacyCodeException.PROVIDER_NOT_FOUND.apply(providerClass));
     }
 }
