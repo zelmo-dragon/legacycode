@@ -29,7 +29,7 @@ public final class DynamicDAO implements DynamicRepository {
 
         DB
                 .getInstance()
-                .removeIf(entityClass, e -> Objects.equals(e.getBusinessKey(), key));
+                .removeIf(entityClass, e -> Objects.equals(e.getKey(), key));
     }
 
     @Override
@@ -39,7 +39,7 @@ public final class DynamicDAO implements DynamicRepository {
 
         return DB
                 .getInstance()
-                .contains(entityClass, e -> Objects.equals(e.getBusinessKey(), key));
+                .contains(entityClass, e -> Objects.equals(e.getKey(), key));
     }
 
     @Override
@@ -47,7 +47,7 @@ public final class DynamicDAO implements DynamicRepository {
 
         return DB
                 .getInstance()
-                .get(entityClass, e -> Objects.equals(e.getBusinessKey(), key));
+                .get(entityClass, e -> Objects.equals(e.getKey(), key));
     }
 
 }

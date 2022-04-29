@@ -1,10 +1,11 @@
 package com.github.legacycode.internal.persistence.jdbc;
 
 import java.sql.Types;
+import java.util.UUID;
 
 enum GenderColumn implements Column {
 
-    ID("id", String.class, Types.VARCHAR),
+    ID("id", UUID.class, Types.VARCHAR),
     NAME("name", String.class, Types.VARCHAR),
     DESCRIPTION("description", String.class, Types.VARCHAR);
 

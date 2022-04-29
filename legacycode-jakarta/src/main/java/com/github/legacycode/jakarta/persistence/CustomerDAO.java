@@ -1,16 +1,13 @@
 package com.github.legacycode.jakarta.persistence;
 
 import java.io.Serializable;
+import java.util.UUID;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
-import com.github.legacycode.core.customer.Customer;
-import com.github.legacycode.core.customer.CustomerRepository;
-import com.github.legacycode.core.customer.Email;
-
 @Dependent
-public class CustomerDAO extends AbstractDAO<Customer, Email> implements CustomerRepository, Serializable {
+public class CustomerDAO extends AbstractDAO<CustomerEntity, UUID> implements Serializable {
 
     @Inject
     public CustomerDAO(EntityManager em) {

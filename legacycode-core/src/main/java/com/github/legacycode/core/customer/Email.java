@@ -1,10 +1,41 @@
 package com.github.legacycode.core.customer;
 
-import lombok.Value;
+import java.util.Objects;
 
-@Value
-public class Email {
+import com.github.legacycode.core.gender.Name;
 
-    String value;
+public final class Email {
+
+    private final String value;
+
+    public Email(final String value) {
+        this.value = value;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        boolean equality;
+
+        if (this == o) {
+            equality = true;
+        } else if (o == null || getClass() != o.getClass()) {
+            equality = false;
+        } else {
+            var name = (Email) o;
+            equality = Objects.equals(value, name.value);
+        }
+        return equality;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
+    }
+
+    // Accesseurs
+
+    public String getValue() {
+        return value;
+    }
 
 }

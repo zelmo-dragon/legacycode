@@ -1,14 +1,15 @@
 package com.github.legacycode.internal.persistence.jdbc;
 
-import com.github.legacycode.core.gender.Gender;
-import com.github.legacycode.core.gender.GenderRepository;
-import com.github.legacycode.core.gender.Name;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Consumer;
+
+import com.github.legacycode.core.gender.Gender;
+import com.github.legacycode.core.gender.GenderRepository;
+import com.github.legacycode.core.gender.Name;
 
 @JDBC
 public final class GenderDAO implements GenderRepository {
@@ -21,18 +22,16 @@ public final class GenderDAO implements GenderRepository {
 
         String query;
         Consumer<PreparedStatement> bind;
-        if (this.contains(entity.getName())) {
+        if (this.contains(entity.getKey())) {
 
             query = String.format(
                     "UPDATE %s SET %s = ?, %s = ? WHERE %s = ?",
                     GenderColumn.getTableName(),
                     GenderColumn.NAME.getColumnName(),
                     GenderColumn.DESCRIPTION.getColumnName(),
-                    GenderColumn.NAME.getColumnName()
+                    GenderColumn.ID.getColumnName()
             );
-
             bind = s -> bindUpdateParameter(s, entity);
-
         } else {
 
             query = String.format(
@@ -45,46 +44,51 @@ public final class GenderDAO implements GenderRepository {
 
             bind = s -> bindInsertParameter(s, entity);
         }
-
         DB.getInstance().executeUpdate(query, bind);
-
     }
 
     @Override
-    public void remove(Name key) {
+    public void remove(UUID key) {
         var query = String.format(
                 "DELETE FROM %s WHERE %s = ?",
                 GenderColumn.getTableName(),
-                GenderColumn.NAME.getColumnName()
+                GenderColumn.ID.getColumnName()
         );
 
-        DB.getInstance().executeUpdate(query);
+        DB
+                .getInstance()
+                .execute(
+                        query,
+                        s -> bindKeyParameter(s, key),
+                        GenderDAO::extractLongResult
+                );
     }
 
     @Override
-    public boolean contains(Name key) {
+    public boolean contains(UUID key) {
         var query = String.format(
                 "SELECT count(%s) FROM %s WHERE %s = ?",
                 GenderColumn.ID.getColumnName(),
                 GenderColumn.getTableName(),
-                GenderColumn.NAME.getColumnName()
+                GenderColumn.ID.getColumnName()
         );
 
         var count = DB
                 .getInstance()
                 .execute(
                         query,
-                        s -> bindCountParameter(s, key),
-                        GenderDAO::extractCountResult
+                        s -> bindKeyParameter(s, key),
+                        GenderDAO::extractLongResult
                 );
 
         return count > 0;
     }
 
     @Override
-    public Optional<Gender> find(Name key) {
+    public Optional<Gender> find(UUID key) {
         var query = String.format(
-                "SELECT %s, %s FROM %s WHERE %s = ?",
+                "SELECT %s, %s, %s FROM %s WHERE %s = ?",
+                GenderColumn.ID.getColumnName(),
                 GenderColumn.NAME.getColumnName(),
                 GenderColumn.DESCRIPTION.getColumnName(),
                 GenderColumn.getTableName(),
@@ -104,7 +108,7 @@ public final class GenderDAO implements GenderRepository {
 
     private static void bindInsertParameter(PreparedStatement s, Gender e) {
         try {
-            s.setObject(1, UUID.randomUUID().toString(), GenderColumn.ID.getPhysicalType());
+            s.setObject(1, UUID.randomUUID(), GenderColumn.ID.getPhysicalType());
             s.setObject(2, e.getName().getValue(), GenderColumn.NAME.getPhysicalType());
             s.setObject(3, e.getDescription(), GenderColumn.DESCRIPTION.getPhysicalType());
         } catch (SQLException ex) {
@@ -121,15 +125,15 @@ public final class GenderDAO implements GenderRepository {
         }
     }
 
-    private static void bindCountParameter(final PreparedStatement s, final Name e) {
+    private static void bindKeyParameter(final PreparedStatement s, final UUID e) {
         try {
-            s.setObject(1, e.getValue(), GenderColumn.NAME.getPhysicalType());
+            s.setObject(1, e, GenderColumn.ID.getPhysicalType());
         } catch (SQLException ex) {
             throw new IllegalStateException(ex);
         }
     }
 
-    private static long extractCountResult(final ResultSet r) {
+    private static long extractLongResult(final ResultSet r) {
         try {
             r.first();
             return r.getLong(1);
@@ -138,9 +142,9 @@ public final class GenderDAO implements GenderRepository {
         }
     }
 
-    private static void bindSelectParameter(final PreparedStatement s, final Name e) {
+    private static void bindSelectParameter(final PreparedStatement s, final UUID e) {
         try {
-            s.setObject(1, e.getValue(), GenderColumn.NAME.getPhysicalType());
+            s.setObject(1, e, GenderColumn.ID.getPhysicalType());
         } catch (SQLException ex) {
             throw new IllegalStateException(ex);
         }
@@ -151,10 +155,12 @@ public final class GenderDAO implements GenderRepository {
             Gender entity;
             if (r.first()) {
 
-                String name = r.getObject(1, GenderColumn.NAME.getLogicalType());
-                String description = r.getObject(2, GenderColumn.DESCRIPTION.getLogicalType());
+                UUID id = r.getObject(1, GenderColumn.ID.getLogicalType());
+                String name = r.getObject(2, GenderColumn.NAME.getLogicalType());
+                String description = r.getObject(3, GenderColumn.DESCRIPTION.getLogicalType());
 
                 entity = new Gender(
+                        id,
                         new Name(name),
                         description
                 );

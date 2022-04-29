@@ -11,7 +11,7 @@ public interface DynamicService {
 
         var repository = DynamicService.getRepository();
         var entityClass = targetType.<E, K>getEntityClass();
-        var key = entity.getBusinessKey();
+        var key = entity.getKey();
         var exists = repository.contains(entityClass, key);
         if (exists) {
             var message = String.format("Entity '%s' with key '%s' already exists", entity, key);
@@ -45,7 +45,7 @@ public interface DynamicService {
 
         var repository = DynamicService.getRepository();
         var entityClass = targetType.<E, K>getEntityClass();
-        var key = entity.getBusinessKey();
+        var key = entity.getKey();
         var exists = repository.contains(entityClass, key);
         if (!exists) {
             var message = String.format("Entity '%s' with key '%s' not exists", entity, key);

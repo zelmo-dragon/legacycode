@@ -1,14 +1,11 @@
 package com.github.legacycode.jakarta.persistence;
 
+import java.lang.reflect.ParameterizedType;
 import java.util.Optional;
-
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
-import com.github.legacycode.core.Identifiable;
-import com.github.legacycode.core.Repository;
-
-public abstract class AbstractDAO<E extends Identifiable<K>, K> implements Repository<E, K> {
+public abstract class AbstractDAO<E extends Entity<K>, K> implements DAO<E, K> {
 
     protected final transient EntityManager em;
 
@@ -17,21 +14,47 @@ public abstract class AbstractDAO<E extends Identifiable<K>, K> implements Repos
     }
 
     @Override
-    public void add(E entity) {
+    public E add(E entity) {
+        E attachedEntity;
+        if (this.em.contains(entity)) {
+            attachedEntity = this.em.merge(entity);
+        } else {
+            this.em.persist(entity);
+            attachedEntity = entity;
+        }
+        return attachedEntity;
+    }
+
+    @Override
+    public void remove(final E entity) {
+        var puu = this.em.getEntityManagerFactory().getPersistenceUnitUtil();
+        var id = (K) puu.getIdentifier(entity);
+        this.remove(id);
     }
 
     @Override
     public void remove(K key) {
+        var entityClass = getEntityClass();
+        var attachedEntity = this.em.getReference(entityClass, key);
+        this.em.remove(attachedEntity);
     }
 
+
     @Override
-    public boolean contains(K key) {
-        return false;
+    public boolean contains(E entity) {
+        return this.em.contains(entity);
     }
 
     @Override
     public Optional<E> find(K key) {
-        return Optional.empty();
+        var entityClass = getEntityClass();
+        var attachedEntity = this.em.find(entityClass, key);
+        return Optional.ofNullable(attachedEntity);
+    }
+
+    protected Class<E> getEntityClass() {
+        var paramType = (ParameterizedType) this.getClass().getGenericSuperclass();
+        return (Class<E>) paramType.getActualTypeArguments()[0];
     }
 
     protected <T, R> TypedQuery<R> createQuery(

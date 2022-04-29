@@ -1,11 +1,11 @@
 package com.github.legacycode.jakarta.persistence;
 
-import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
+import javax.inject.Singleton;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-@ApplicationScoped
+@Singleton
 public class PersistenceResource {
 
     @Produces

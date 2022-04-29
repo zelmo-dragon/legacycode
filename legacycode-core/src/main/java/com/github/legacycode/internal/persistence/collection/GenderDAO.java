@@ -1,11 +1,12 @@
 package com.github.legacycode.internal.persistence.collection;
 
-import com.github.legacycode.core.gender.Gender;
-import com.github.legacycode.core.gender.GenderRepository;
-import com.github.legacycode.core.gender.Name;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
+
+import com.github.legacycode.core.gender.Gender;
+import com.github.legacycode.core.gender.GenderRepository;
 
 @Collection
 public final class GenderDAO implements GenderRepository {
@@ -23,25 +24,25 @@ public final class GenderDAO implements GenderRepository {
     }
 
     @Override
-    public void remove(Name key) {
+    public void remove(UUID key) {
 
         DB
                 .getInstance()
-                .removeIf(Gender.class, e -> Objects.equals(e.getBusinessKey(), key));
+                .removeIf(Gender.class, e -> Objects.equals(e.getKey(), key));
     }
 
     @Override
-    public boolean contains(Name key) {
+    public boolean contains(UUID key) {
         return DB
                 .getInstance()
-                .contains(Gender.class, e -> Objects.equals(e.getBusinessKey(), key));
+                .contains(Gender.class, e -> Objects.equals(e.getKey(), key));
     }
 
     @Override
-    public Optional<Gender> find(Name key) {
+    public Optional<Gender> find(UUID key) {
         return DB
                 .getInstance()
-                .get(Gender.class, e -> Objects.equals(e.getBusinessKey(), key));
+                .get(Gender.class, e -> Objects.equals(e.getKey(), key));
     }
 
 }

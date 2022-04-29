@@ -6,6 +6,7 @@ import com.github.legacycode.core.customer.Email;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 
 @Collection
 public final class CustomerDAO implements CustomerRepository {
@@ -22,25 +23,25 @@ public final class CustomerDAO implements CustomerRepository {
     }
 
     @Override
-    public void remove(Email key) {
+    public void remove(UUID key) {
 
         DB
                 .getInstance()
-                .removeIf(Customer.class, e -> Objects.equals(e.getBusinessKey(), key));
+                .removeIf(Customer.class, e -> Objects.equals(e.getKey(), key));
     }
 
     @Override
-    public boolean contains(Email key) {
+    public boolean contains(UUID key) {
         return DB
                 .getInstance()
-                .contains(Customer.class, e -> Objects.equals(e.getBusinessKey(), key));
+                .contains(Customer.class, e -> Objects.equals(e.getKey(), key));
     }
 
     @Override
-    public Optional<Customer> find(Email key) {
+    public Optional<Customer> find(UUID key) {
         return DB
                 .getInstance()
-                .get(Customer.class, e -> Objects.equals(e.getBusinessKey(), key));
+                .get(Customer.class, e -> Objects.equals(e.getKey(), key));
     }
 
 }

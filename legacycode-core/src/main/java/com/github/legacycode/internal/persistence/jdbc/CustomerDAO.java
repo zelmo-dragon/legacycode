@@ -23,7 +23,7 @@ public final class CustomerDAO implements CustomerRepository {
 
         String query;
         Consumer<PreparedStatement> bind;
-        if (this.contains(entity.getEmail())) {
+        if (this.contains(entity.getKey())) {
 
             query = String.format(
                     "UPDATE %s SET %s = ?, %s = ?, %s = ?, %s = ?, %s = ? WHERE %s = ?",
@@ -33,7 +33,7 @@ public final class CustomerDAO implements CustomerRepository {
                     CustomerColumn.EMAIL.getColumnName(),
                     CustomerColumn.GENDER_ID.getColumnName(),
                     CustomerColumn.PHONE_NUMBER.getColumnName(),
-                    CustomerColumn.EMAIL.getColumnName()
+                    CustomerColumn.ID.getColumnName()
             );
 
             bind = s -> bindUpdateParameter(s, entity);
@@ -59,11 +59,11 @@ public final class CustomerDAO implements CustomerRepository {
     }
 
     @Override
-    public void remove(Email key) {
+    public void remove(UUID key) {
         var query = String.format(
                 "DELETE FROM %s WHERE %s = ?",
                 CustomerColumn.getTableName(),
-                CustomerColumn.EMAIL.getColumnName()
+                CustomerColumn.ID.getColumnName()
         );
 
         DB
@@ -76,12 +76,12 @@ public final class CustomerDAO implements CustomerRepository {
     }
 
     @Override
-    public boolean contains(Email key) {
+    public boolean contains(UUID key) {
         var query = String.format(
                 "SELECT count(%s) FROM %s WHERE %s = ?",
                 CustomerColumn.ID.getColumnName(),
                 CustomerColumn.getTableName(),
-                CustomerColumn.EMAIL.getColumnName()
+                CustomerColumn.ID.getColumnName()
         );
 
         var count = DB
@@ -96,16 +96,17 @@ public final class CustomerDAO implements CustomerRepository {
     }
 
     @Override
-    public Optional<Customer> find(Email key) {
+    public Optional<Customer> find(UUID key) {
         var query = String.format(
-                "SELECT %s, %s, %s, %s, %s, FROM %s WHERE %s = ?",
+                "SELECT %s, %s, %s, %s, %s, %s, FROM %s WHERE %s = ?",
+                CustomerColumn.ID.getColumnName(),
                 CustomerColumn.GIVEN_NAME.getColumnName(),
                 CustomerColumn.FAMILY_NAME.getColumnName(),
                 CustomerColumn.EMAIL.getColumnName(),
                 CustomerColumn.GENDER_ID.getColumnName(),
                 CustomerColumn.PHONE_NUMBER.getColumnName(),
                 CustomerColumn.getTableName(),
-                CustomerColumn.EMAIL.getColumnName()
+                CustomerColumn.ID.getColumnName()
         );
 
         var entity = DB
@@ -121,11 +122,11 @@ public final class CustomerDAO implements CustomerRepository {
 
     private static void bindInsertParameter(PreparedStatement s, Customer e) {
         try {
-            s.setObject(1, UUID.randomUUID().toString(), CustomerColumn.ID.getPhysicalType());
+            s.setObject(1, UUID.randomUUID(), CustomerColumn.ID.getPhysicalType());
             s.setObject(2, e.getGivenName(), CustomerColumn.GIVEN_NAME.getPhysicalType());
             s.setObject(3, e.getFamilyName(), CustomerColumn.FAMILY_NAME.getPhysicalType());
             s.setObject(4, e.getEmail().getValue(), CustomerColumn.EMAIL.getPhysicalType());
-            s.setObject(5, e.getGender().getValue(), CustomerColumn.GENDER_ID.getPhysicalType());
+            s.setObject(5, e.getGender().getId(), CustomerColumn.GENDER_ID.getPhysicalType());
             s.setObject(6, e.getPhoneNumber(), CustomerColumn.PHONE_NUMBER.getPhysicalType());
         } catch (SQLException ex) {
             throw new IllegalStateException(ex);
@@ -137,7 +138,7 @@ public final class CustomerDAO implements CustomerRepository {
             s.setObject(1, e.getGivenName(), CustomerColumn.GIVEN_NAME.getPhysicalType());
             s.setObject(2, e.getFamilyName(), CustomerColumn.FAMILY_NAME.getPhysicalType());
             s.setObject(3, e.getEmail().getValue(), CustomerColumn.EMAIL.getPhysicalType());
-            s.setObject(4, e.getGender().getValue(), CustomerColumn.GENDER_ID.getPhysicalType());
+            s.setObject(4, e.getGender().getId(), CustomerColumn.GENDER_ID.getPhysicalType());
             s.setObject(5, e.getPhoneNumber(), CustomerColumn.PHONE_NUMBER.getPhysicalType());
             s.setObject(5, e.getEmail().getValue(), CustomerColumn.EMAIL.getPhysicalType());
         } catch (SQLException ex) {
@@ -145,9 +146,9 @@ public final class CustomerDAO implements CustomerRepository {
         }
     }
 
-    private static void bindKeyParameter(final PreparedStatement s, final Email e) {
+    private static void bindKeyParameter(final PreparedStatement s, final UUID e) {
         try {
-            s.setObject(1, e.getValue(), CustomerColumn.EMAIL.getPhysicalType());
+            s.setObject(1, e, CustomerColumn.ID.getPhysicalType());
         } catch (SQLException ex) {
             throw new IllegalStateException(ex);
         }
@@ -162,9 +163,9 @@ public final class CustomerDAO implements CustomerRepository {
         }
     }
 
-    private static void bindSelectParameter(final PreparedStatement s, final Email e) {
+    private static void bindSelectParameter(final PreparedStatement s, final UUID e) {
         try {
-            s.setObject(1, e.getValue(), CustomerColumn.EMAIL.getPhysicalType());
+            s.setObject(1, e, CustomerColumn.ID.getPhysicalType());
         } catch (SQLException ex) {
             throw new IllegalStateException(ex);
         }
@@ -175,13 +176,15 @@ public final class CustomerDAO implements CustomerRepository {
             Customer entity;
             if (r.first()) {
 
-                String givenName = r.getObject(1, CustomerColumn.GIVEN_NAME.getLogicalType());
-                String familyName = r.getObject(2, CustomerColumn.FAMILY_NAME.getLogicalType());
-                String email = r.getObject(3, CustomerColumn.EMAIL.getLogicalType());
-                String genderId = r.getObject(4, CustomerColumn.GENDER_ID.getLogicalType());
-                String phoneNumber = r.getObject(5, CustomerColumn.PHONE_NUMBER.getLogicalType());
+                UUID id = r.getObject(1, CustomerColumn.ID.getLogicalType());
+                String givenName = r.getObject(2, CustomerColumn.GIVEN_NAME.getLogicalType());
+                String familyName = r.getObject(3, CustomerColumn.FAMILY_NAME.getLogicalType());
+                String email = r.getObject(4, CustomerColumn.EMAIL.getLogicalType());
+                UUID genderId = r.getObject(5, CustomerColumn.GENDER_ID.getLogicalType());
+                String phoneNumber = r.getObject(6, CustomerColumn.PHONE_NUMBER.getLogicalType());
 
                 entity = new Customer(
+                        id,
                         givenName,
                         familyName,
                         phoneNumber,

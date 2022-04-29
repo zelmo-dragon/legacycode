@@ -1,14 +1,15 @@
 package com.github.legacycode.internal.persistence.jdbc;
 
 import java.sql.Types;
+import java.util.UUID;
 
 enum CustomerColumn implements Column {
 
-    ID("id", String.class, Types.VARCHAR),
+    ID("id", UUID.class, Types.VARCHAR),
     GIVEN_NAME("given_name", String.class, Types.VARCHAR),
     FAMILY_NAME("family_name", String.class, Types.VARCHAR),
     EMAIL("email", String.class, Types.VARCHAR),
-    GENDER_ID("gender_id", String.class, Types.VARCHAR),
+    GENDER_ID("gender_id", UUID.class, Types.VARCHAR),
     PHONE_NUMBER("phone_number", String.class, Types.VARCHAR);
 
     private final String columnName;

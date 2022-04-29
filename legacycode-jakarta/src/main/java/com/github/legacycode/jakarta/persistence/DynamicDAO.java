@@ -6,11 +6,8 @@ import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
-import com.github.legacycode.core.Identifiable;
-import com.github.legacycode.core.common.DynamicRepository;
-
 @Dependent
-public class DynamicDAO implements DynamicRepository, Serializable {
+public class DynamicDAO implements Serializable {
 
     private final transient EntityManager em;
 
@@ -19,23 +16,19 @@ public class DynamicDAO implements DynamicRepository, Serializable {
         this.em = em;
     }
 
-    @Override
-    public <E extends Identifiable<K>, K> void add(Class<E> entityClass, E entity) {
+    public <E extends Entity<K>, K> void add(Class<E> entityClass, E entity) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    @Override
-    public <E extends Identifiable<K>, K> void remove(Class<E> entityClass, K key) {
+    public <E extends Entity<K>, K> void remove(Class<E> entityClass, K key) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    @Override
-    public <E extends Identifiable<K>, K> boolean contains(Class<E> entityClass, K key) {
+    public <E extends Entity<K>, K> boolean contains(Class<E> entityClass, K key) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    @Override
-    public <E extends Identifiable<K>, K> Optional<E> find(Class<E> entityClass, K key) {
+    public <E extends Entity<K>, K> Optional<E> find(Class<E> entityClass, K key) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
