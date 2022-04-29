@@ -3,10 +3,13 @@ package com.github.legacycode.core.customer;
 import java.util.Comparator;
 import java.util.Objects;
 
+import com.github.legacycode.util.Empty;
 import com.github.legacycode.util.Equals;
 import com.github.legacycode.util.ToString;
 
 public final class Email implements Comparable<Email> {
+
+    public static final Email EMPTY = new Email("");
 
     private final String value;
 

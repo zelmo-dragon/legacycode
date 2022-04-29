@@ -5,10 +5,13 @@ import java.util.Objects;
 import java.util.UUID;
 
 import com.github.legacycode.core.Identifiable;
+import com.github.legacycode.util.Empty;
 import com.github.legacycode.util.Equals;
 import com.github.legacycode.util.ToString;
 
 public final class Gender implements Comparable<Gender>, Identifiable<UUID> {
+
+    public static final Gender EMPTY = new Gender(Empty.EMPTY_UUID, Name.EMPTY, "");
 
     private final UUID id;
     private final Name name;

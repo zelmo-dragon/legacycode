@@ -8,6 +8,8 @@ import com.github.legacycode.util.ToString;
 
 public final class Name implements Comparable<Name> {
 
+    public static final Name EMPTY = new Name("");
+
     private final String value;
 
     public Name(final String value) {

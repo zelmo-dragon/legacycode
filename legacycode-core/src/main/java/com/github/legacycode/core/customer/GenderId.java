@@ -4,10 +4,13 @@ import java.util.Comparator;
 import java.util.Objects;
 import java.util.UUID;
 
+import com.github.legacycode.util.Empty;
 import com.github.legacycode.util.Equals;
 import com.github.legacycode.util.ToString;
 
 public final class GenderId implements Comparable<GenderId> {
+
+    public static final GenderId EMPTY = new GenderId(Empty.EMPTY_UUID);
 
     private final UUID id;
 
