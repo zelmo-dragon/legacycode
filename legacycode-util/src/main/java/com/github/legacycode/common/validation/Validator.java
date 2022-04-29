@@ -6,13 +6,13 @@ import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-public final class Validator<T> {
+public final class Validator<E> {
 
-    private final T element;
+    private final E element;
 
     private final List<ValidationException> exceptions;
 
-    private Validator(final T element) {
+    private Validator(final E element) {
         this.element = element;
         this.exceptions = new ArrayList<>();
     }
@@ -21,8 +21,8 @@ public final class Validator<T> {
         return new Validator<>(Objects.requireNonNull(element));
     }
 
-    public Validator<T> validate(
-            final Predicate<T> validation,
+    public Validator<E> validate(
+            final Predicate<E> validation,
             final String message) {
 
         if (!validation.test(element)) {
@@ -31,15 +31,15 @@ public final class Validator<T> {
         return this;
     }
 
-    public <U> Validator<T> validate(
-            final Function<T, U> getter,
+    public <U> Validator<E> validate(
+            final Function<E, U> getter,
             final Predicate<U> validation,
             final String message) {
 
         return validate(getter.andThen(validation::test)::apply, message);
     }
 
-    public T get() {
+    public E get() {
         if (!exceptions.isEmpty()) {
             ValidationException ex = new ValidationException(element.getClass());
             exceptions.forEach(ex::addSuppressed);

@@ -7,6 +7,8 @@ import java.util.UUID;
 import com.github.legacycode.common.lang.Empty;
 import com.github.legacycode.common.lang.Equals;
 import com.github.legacycode.common.lang.ToString;
+import com.github.legacycode.common.validation.Constraint;
+import com.github.legacycode.common.validation.Validator;
 
 public final class GenderId implements Comparable<GenderId> {
 
@@ -14,8 +16,15 @@ public final class GenderId implements Comparable<GenderId> {
 
     private final UUID id;
 
-    public GenderId(final UUID id) {
+    private GenderId(final UUID id) {
         this.id = id;
+    }
+
+    public static GenderId of(final UUID id) {
+        return Validator
+                .of(new GenderId(id))
+                .validate(GenderId::getId, Objects::nonNull, Constraint.MESSAGE_NOT_NULL)
+                .get();
     }
 
     @Override
@@ -40,7 +49,7 @@ public final class GenderId implements Comparable<GenderId> {
     @Override
     public String toString() {
         return ToString
-                .with(GenderId::getId)
+                .with("id", GenderId::getId)
                 .apply(this);
     }
 

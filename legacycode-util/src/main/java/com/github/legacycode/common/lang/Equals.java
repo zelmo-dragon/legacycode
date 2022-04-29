@@ -24,18 +24,18 @@ public final class Equals<E> {
         return this;
     }
 
-    public boolean apply(final E entity, final Object any) {
-        Objects.requireNonNull(entity);
+    public boolean apply(final E element, final Object any) {
+        Objects.requireNonNull(element);
         boolean equality;
-        if (entity == any) {
+        if (element == any) {
             equality = true;
-        } else if (Objects.isNull(any) || !Objects.equals(entity.getClass(), any.getClass())) {
+        } else if (Objects.isNull(any) || !Objects.equals(element.getClass(), any.getClass())) {
             equality = false;
         } else {
             var other = (E) any;
             equality = this.getters
                     .stream()
-                    .allMatch(g -> Objects.equals(g.apply(entity), g.apply(other)));
+                    .allMatch(g -> Objects.equals(g.apply(element), g.apply(other)));
         }
         return equality;
     }

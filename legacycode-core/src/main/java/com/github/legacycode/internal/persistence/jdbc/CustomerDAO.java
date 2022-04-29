@@ -183,13 +183,13 @@ public final class CustomerDAO implements CustomerRepository {
                 UUID genderId = r.getObject(5, CustomerColumn.GENDER_ID.getLogicalType());
                 String phoneNumber = r.getObject(6, CustomerColumn.PHONE_NUMBER.getLogicalType());
 
-                entity = new Customer(
+                entity = Customer.of(
                         id,
                         givenName,
                         familyName,
                         phoneNumber,
-                        new Email(email),
-                        new GenderId(genderId)
+                        Email.of(email),
+                        GenderId.of(genderId)
                 );
 
             } else {

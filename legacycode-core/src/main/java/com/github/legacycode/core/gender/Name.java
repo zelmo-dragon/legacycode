@@ -5,6 +5,8 @@ import java.util.Objects;
 
 import com.github.legacycode.common.lang.Equals;
 import com.github.legacycode.common.lang.ToString;
+import com.github.legacycode.common.validation.Constraint;
+import com.github.legacycode.common.validation.Validator;
 
 public final class Name implements Comparable<Name> {
 
@@ -12,8 +14,15 @@ public final class Name implements Comparable<Name> {
 
     private final String value;
 
-    public Name(final String value) {
+    private Name(final String value) {
         this.value = value;
+    }
+
+    public static Name of(final String value) {
+        return Validator
+                .of(new Name(value))
+                .validate(Name::getValue, Constraint::notEmpty, Constraint.MESSAGE_NOT_EMPTY)
+                .get();
     }
 
     @Override
@@ -38,7 +47,7 @@ public final class Name implements Comparable<Name> {
     @Override
     public String toString() {
         return ToString
-                .with(Name::getValue)
+                .with("value", Name::getValue)
                 .apply(this);
     }
 

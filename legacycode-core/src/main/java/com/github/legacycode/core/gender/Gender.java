@@ -4,10 +4,12 @@ import java.util.Comparator;
 import java.util.Objects;
 import java.util.UUID;
 
-import com.github.legacycode.core.Identifiable;
 import com.github.legacycode.common.lang.Empty;
 import com.github.legacycode.common.lang.Equals;
 import com.github.legacycode.common.lang.ToString;
+import com.github.legacycode.common.validation.Constraint;
+import com.github.legacycode.common.validation.Validator;
+import com.github.legacycode.core.Identifiable;
 
 public final class Gender implements Comparable<Gender>, Identifiable<UUID> {
 
@@ -17,10 +19,20 @@ public final class Gender implements Comparable<Gender>, Identifiable<UUID> {
     private final Name name;
     private final String description;
 
-    public Gender(final UUID id, final Name name, final String description) {
+    private Gender(final UUID id, final Name name, final String description) {
         this.id = id;
         this.name = name;
         this.description = description;
+    }
+
+    public static Gender of(final UUID id, final Name name, final String description) {
+        return Validator
+                .of(new Gender(id, name, description))
+                .validate(Gender::getId, Objects::nonNull, Constraint.MESSAGE_NOT_NULL)
+                .validate(Gender::getName, Objects::nonNull, Constraint.MESSAGE_NOT_NULL)
+                .validate(Gender::getName, e -> !Objects.equals(e, Name.EMPTY), Constraint.MESSAGE_NOT_EMPTY_OBJECT)
+                .validate(Gender::getDescription, Objects::nonNull, Constraint.MESSAGE_NOT_NULL)
+                .get();
     }
 
     @Override
@@ -49,9 +61,9 @@ public final class Gender implements Comparable<Gender>, Identifiable<UUID> {
     @Override
     public String toString() {
         return ToString
-                .with(Gender::getId)
-                .thenWith(Gender::getName)
-                .thenWith(Gender::getDescription)
+                .with("id", Gender::getId)
+                .thenWith("name", Gender::getName)
+                .thenWith("description", Gender::getDescription)
                 .apply(this);
     }
 

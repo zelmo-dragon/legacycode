@@ -159,9 +159,9 @@ public final class GenderDAO implements GenderRepository {
                 String name = r.getObject(2, GenderColumn.NAME.getLogicalType());
                 String description = r.getObject(3, GenderColumn.DESCRIPTION.getLogicalType());
 
-                entity = new Gender(
+                entity = Gender.of(
                         id,
-                        new Name(name),
+                        Name.of(name),
                         description
                 );
 
