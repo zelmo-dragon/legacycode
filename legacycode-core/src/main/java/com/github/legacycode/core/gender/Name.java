@@ -3,8 +3,8 @@ package com.github.legacycode.core.gender;
 import java.util.Comparator;
 import java.util.Objects;
 
-import com.github.legacycode.util.Equals;
-import com.github.legacycode.util.ToString;
+import com.github.legacycode.common.lang.Equals;
+import com.github.legacycode.common.lang.ToString;
 
 public final class Name implements Comparable<Name> {
 

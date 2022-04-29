@@ -3,9 +3,8 @@ package com.github.legacycode.core.customer;
 import java.util.Comparator;
 import java.util.Objects;
 
-import com.github.legacycode.util.Empty;
-import com.github.legacycode.util.Equals;
-import com.github.legacycode.util.ToString;
+import com.github.legacycode.common.lang.Equals;
+import com.github.legacycode.common.lang.ToString;
 
 public final class Email implements Comparable<Email> {
 

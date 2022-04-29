@@ -1,4 +1,4 @@
-package com.github.legacycode.util;
+package com.github.legacycode.common.lang;
 
 import java.util.HashSet;
 import java.util.Objects;

@@ -5,9 +5,9 @@ import java.util.Objects;
 import java.util.UUID;
 
 import com.github.legacycode.core.Identifiable;
-import com.github.legacycode.util.Empty;
-import com.github.legacycode.util.Equals;
-import com.github.legacycode.util.ToString;
+import com.github.legacycode.common.lang.Empty;
+import com.github.legacycode.common.lang.Equals;
+import com.github.legacycode.common.lang.ToString;
 
 public final class Gender implements Comparable<Gender>, Identifiable<UUID> {
 
