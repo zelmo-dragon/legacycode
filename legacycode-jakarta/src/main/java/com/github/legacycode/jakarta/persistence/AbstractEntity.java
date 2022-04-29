@@ -11,6 +11,7 @@ import javax.persistence.Version;
 @MappedSuperclass
 public abstract class AbstractEntity implements Entity<UUID>, Serializable {
 
+    private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "id", nullable = false, unique = true, columnDefinition = "VARCHAR(36)")
     protected UUID id;

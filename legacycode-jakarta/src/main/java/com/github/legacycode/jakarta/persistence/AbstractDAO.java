@@ -3,7 +3,9 @@ package com.github.legacycode.jakarta.persistence;
 import java.lang.reflect.ParameterizedType;
 import java.util.Optional;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
+import javax.persistence.metamodel.SingularAttribute;
 
 public abstract class AbstractDAO<E extends Entity<K>, K> implements DAO<E, K> {
 
@@ -27,22 +29,25 @@ public abstract class AbstractDAO<E extends Entity<K>, K> implements DAO<E, K> {
 
     @Override
     public void remove(final E entity) {
-        var puu = this.em.getEntityManagerFactory().getPersistenceUnitUtil();
-        var id = (K) puu.getIdentifier(entity);
-        this.remove(id);
-    }
-
-    @Override
-    public void remove(K key) {
         var entityClass = getEntityClass();
-        var attachedEntity = this.em.getReference(entityClass, key);
+        var puu = this.em.getEntityManagerFactory().getPersistenceUnitUtil();
+        var id = puu.getIdentifier(entity);
+        var attachedEntity = this.em.getReference(entityClass, id);
         this.em.remove(attachedEntity);
     }
 
-
     @Override
     public boolean contains(E entity) {
-        return this.em.contains(entity);
+        var cb = this.em.getCriteriaBuilder();
+        var cq = cb.createQuery(Long.class);
+        var root = cq.from(getEntityClass());
+        cq.select(cb.count(root));
+        var puu = this.em.getEntityManagerFactory().getPersistenceUnitUtil();
+        var id = puu.getIdentifier(entity);
+        var attribut = getPrimaryKeyAttribut();
+        var p0 = cb.equal(root.get(attribut), id);
+        cq.where(p0);
+        return this.em.createQuery(cq).getSingleResult() > 0;
     }
 
     @Override
@@ -76,6 +81,19 @@ public abstract class AbstractDAO<E extends Entity<K>, K> implements DAO<E, K> {
             final PredicateBuilder<R, R> predicateBuilder) {
 
         return this.createQuery(queryRoot, predicateBuilder);
+    }
+
+    private SingularAttribute<E, ?> getPrimaryKeyAttribut() {
+        var entityClass = getEntityClass();
+        return this.em
+                .getMetamodel()
+                .entity(entityClass)
+                .getDeclaredSingularAttributes()
+                .stream()
+                .filter(SingularAttribute::isId)
+                .findFirst()
+                .orElseThrow(() -> new PersistenceException("No primary key attribut found in class: " + entityClass));
+
     }
 
 }

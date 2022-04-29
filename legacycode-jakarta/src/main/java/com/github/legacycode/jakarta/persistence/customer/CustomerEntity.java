@@ -1,4 +1,4 @@
-package com.github.legacycode.jakarta.persistence;
+package com.github.legacycode.jakarta.persistence.customer;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
@@ -10,10 +10,15 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.github.legacycode.jakarta.persistence.AbstractEntity;
+import com.github.legacycode.jakarta.persistence.gender.GenderEntity;
+
 @Entity
 @Table(name = "customer")
 @Access(AccessType.FIELD)
 public class CustomerEntity extends AbstractEntity {
+
+    private static final long serialVersionUID = 1L;
 
     @NotBlank
     @Size(max = 255)
@@ -26,8 +31,8 @@ public class CustomerEntity extends AbstractEntity {
     private String familyName;
 
     @NotBlank
-    @Size(max = 255)
     @Email
+    @Size(max = 255)
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 

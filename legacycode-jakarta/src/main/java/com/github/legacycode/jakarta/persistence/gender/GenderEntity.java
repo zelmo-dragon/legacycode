@@ -1,4 +1,4 @@
-package com.github.legacycode.jakarta.persistence;
+package com.github.legacycode.jakarta.persistence.gender;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
@@ -6,16 +6,22 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+import com.github.legacycode.jakarta.persistence.AbstractEntity;
 
 @Entity
 @Table(name = "gender")
 @Access(AccessType.FIELD)
 public class GenderEntity extends AbstractEntity {
 
+    private static final long serialVersionUID = 1L;
+
     @NotBlank
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 
+    @NotNull
     @Column(name = "description")
     private String description;
 
