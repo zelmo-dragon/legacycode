@@ -1,8 +1,12 @@
 package com.github.legacycode.core.gender;
 
+import java.util.Comparator;
 import java.util.Objects;
 
-public final class Name {
+import com.github.legacycode.util.Equals;
+import com.github.legacycode.util.ToString;
+
+public final class Name implements Comparable<Name> {
 
     private final String value;
 
@@ -11,23 +15,29 @@ public final class Name {
     }
 
     @Override
-    public boolean equals(final Object o) {
-        boolean equality;
+    public int compareTo(final Name o) {
+        return Comparator
+                .comparing(Name::getValue)
+                .compare(this, o);
+    }
 
-        if (this == o) {
-            equality = true;
-        } else if (o == null || getClass() != o.getClass()) {
-            equality = false;
-        } else {
-            var name = (Name) o;
-            equality = Objects.equals(value, name.value);
-        }
-        return equality;
+    @Override
+    public boolean equals(final Object o) {
+        return Equals
+                .with(Name::getValue)
+                .apply(this, o);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(value);
+    }
+
+    @Override
+    public String toString() {
+        return ToString
+                .with(Name::getValue)
+                .apply(this);
     }
 
     // Accesseurs

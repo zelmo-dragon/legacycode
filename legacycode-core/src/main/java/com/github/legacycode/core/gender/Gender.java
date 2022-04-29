@@ -1,11 +1,14 @@
 package com.github.legacycode.core.gender;
 
+import java.util.Comparator;
 import java.util.Objects;
 import java.util.UUID;
 
 import com.github.legacycode.core.Identifiable;
+import com.github.legacycode.util.Equals;
+import com.github.legacycode.util.ToString;
 
-public final class Gender implements Identifiable<UUID> {
+public final class Gender implements Comparable<Gender>, Identifiable<UUID> {
 
     private final UUID id;
     private final Name name;
@@ -18,24 +21,35 @@ public final class Gender implements Identifiable<UUID> {
     }
 
     @Override
+    public int compareTo(final Gender o) {
+        return Comparator
+                .comparing(Gender::getId)
+                .thenComparing(Gender::getName)
+                .thenComparing(Gender::getDescription)
+                .compare(this, o);
+    }
+
+    @Override
     public boolean equals(final Object o) {
-        boolean equality;
-        if (this == o) {
-            equality = true;
-        } else if (o == null || getClass() != o.getClass()) {
-            equality = false;
-        } else {
-            var other = (Gender) o;
-            equality = Objects.equals(id, other.id)
-                    && Objects.equals(name, other.name)
-                    && Objects.equals(description, other.description);
-        }
-        return equality;
+        return Equals
+                .with(Gender::getId)
+                .thenWith(Gender::getName)
+                .thenWith(Gender::getDescription)
+                .apply(this, o);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(id, name, description);
+    }
+
+    @Override
+    public String toString() {
+        return ToString
+                .with(Gender::getId)
+                .thenWith(Gender::getName)
+                .thenWith(Gender::getDescription)
+                .apply(this);
     }
 
     @Override

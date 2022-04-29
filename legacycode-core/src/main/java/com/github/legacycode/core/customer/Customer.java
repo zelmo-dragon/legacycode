@@ -4,18 +4,16 @@ import java.util.Objects;
 import java.util.UUID;
 
 import com.github.legacycode.core.Identifiable;
+import com.github.legacycode.util.Equals;
+import com.github.legacycode.util.ToString;
 
 public final class Customer implements Identifiable<UUID> {
 
     private final UUID id;
     private final String givenName;
-
     private final String familyName;
-
     private final String phoneNumber;
-
     private final Email email;
-
     private final GenderId gender;
 
     public Customer(
@@ -36,26 +34,31 @@ public final class Customer implements Identifiable<UUID> {
 
     @Override
     public boolean equals(Object o) {
-        boolean equality;
-        if (this == o) {
-            equality = true;
-        } else if (o == null || getClass() != o.getClass()) {
-            equality = false;
-        } else {
-            var other = (Customer) o;
-            equality = Objects.equals(id, other.id)
-                    && Objects.equals(givenName, other.givenName)
-                    && Objects.equals(familyName, other.familyName)
-                    && Objects.equals(phoneNumber, other.phoneNumber)
-                    && Objects.equals(email, other.email)
-                    && Objects.equals(gender, other.gender);
-        }
-        return equality;
+        return Equals
+                .with(Customer::getId)
+                .thenWith(Customer::getGivenName)
+                .thenWith(Customer::getFamilyName)
+                .thenWith(Customer::getPhoneNumber)
+                .thenWith(Customer::getEmail)
+                .thenWith(Customer::getGender)
+                .apply(this, o);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(id, givenName, familyName, phoneNumber, email, gender);
+    }
+
+    @Override
+    public String toString() {
+        return ToString
+                .with(Customer::getId)
+                .thenWith(Customer::getGivenName)
+                .thenWith(Customer::getFamilyName)
+                .thenWith(Customer::getPhoneNumber)
+                .thenWith(Customer::getEmail)
+                .thenWith(Customer::getGender)
+                .apply(this);
     }
 
     @Override
