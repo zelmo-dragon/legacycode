@@ -8,7 +8,7 @@
     
     <persistence-unit name="dyna-pu" transaction-type="JTA">       
               
-        <jta-data-source>java:app/jdbc/DynaDS</jta-data-source>
+        <jta-data-source>java:app/jdbc/LegacyCodeDS</jta-data-source>
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <shared-cache-mode>ENABLE_SELECTIVE</shared-cache-mode>
         <validation-mode>CALLBACK</validation-mode>

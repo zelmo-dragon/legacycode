@@ -8,7 +8,6 @@ public interface DAO<E extends Entity<K>, K> {
 
     void remove(E entity);
 
-
     boolean contains(E entity);
 
     Optional<E> find(K key);

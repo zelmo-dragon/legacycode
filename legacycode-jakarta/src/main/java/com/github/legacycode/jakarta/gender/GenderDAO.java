@@ -1,4 +1,4 @@
-package com.github.legacycode.jakarta.persistence.gender;
+package com.github.legacycode.jakarta.gender;
 
 import java.io.Serializable;
 import java.util.UUID;

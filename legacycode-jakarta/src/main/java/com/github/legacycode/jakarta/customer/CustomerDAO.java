@@ -1,4 +1,4 @@
-package com.github.legacycode.jakarta.persistence.customer;
+package com.github.legacycode.jakarta.customer;
 
 import java.io.Serializable;
 import java.util.UUID;

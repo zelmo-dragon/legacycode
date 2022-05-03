@@ -1,4 +1,4 @@
-package com.github.legacycode.jakarta.persistence.common;
+package com.github.legacycode.jakarta.common;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;

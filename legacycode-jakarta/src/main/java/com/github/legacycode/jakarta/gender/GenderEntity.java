@@ -1,4 +1,4 @@
-package com.github.legacycode.jakarta.persistence.gender;
+package com.github.legacycode.jakarta.gender;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;

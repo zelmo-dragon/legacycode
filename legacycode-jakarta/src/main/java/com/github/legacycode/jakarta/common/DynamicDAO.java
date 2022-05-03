@@ -1,4 +1,4 @@
-package com.github.legacycode.jakarta.persistence.common;
+package com.github.legacycode.jakarta.common;
 
 
 import java.io.Serializable;

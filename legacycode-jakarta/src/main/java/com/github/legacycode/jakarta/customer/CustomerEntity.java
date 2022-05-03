@@ -1,4 +1,4 @@
-package com.github.legacycode.jakarta.persistence.customer;
+package com.github.legacycode.jakarta.customer;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.github.legacycode.jakarta.persistence.AbstractEntity;
-import com.github.legacycode.jakarta.persistence.gender.GenderEntity;
+import com.github.legacycode.jakarta.gender.GenderEntity;
 
 @Entity
 @Table(name = "customer")

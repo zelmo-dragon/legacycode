@@ -1,6 +1,5 @@
-package com.github.legacycode.jakarta.persistence.common;
+package com.github.legacycode.jakarta.common;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
