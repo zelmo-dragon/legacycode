@@ -56,7 +56,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <!-- Version des dépendances -->
-        <version.java>11</version.java>
+        <version.java>17</version.java>
         <version.jakarta>9.1.0</version.jakarta>
         <version.junit>5.8.2</version.junit>
         <version.eclipselink>3.0.2</version.eclipselink>
