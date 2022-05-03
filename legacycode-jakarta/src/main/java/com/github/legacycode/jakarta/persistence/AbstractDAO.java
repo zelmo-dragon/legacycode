@@ -2,10 +2,10 @@ package com.github.legacycode.jakarta.persistence;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.Optional;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceException;
-import javax.persistence.TypedQuery;
-import javax.persistence.metamodel.SingularAttribute;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceException;
+import jakarta.persistence.TypedQuery;
+import jakarta.persistence.metamodel.SingularAttribute;
 
 public abstract class AbstractDAO<E extends Entity<K>, K> implements DAO<E, K> {
 

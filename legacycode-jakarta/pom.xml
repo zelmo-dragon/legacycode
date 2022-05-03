@@ -35,6 +35,12 @@
             <artifactId>jakarta.jakartaee-api</artifactId>
             <scope>provided</scope>
         </dependency>
+
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -42,6 +48,24 @@
             <plugin>
                 <groupId>org.codehaus.cargo</groupId>
                 <artifactId>cargo-maven3-plugin</artifactId>
+                <configuration>
+                    <container>
+                        <containerId>glassfish6x</containerId>
+                        <zipUrlInstaller>
+                            <url>
+                                https://github.com/eclipse-ee4j/glassfish/releases/download/6.2.5/glassfish-6.2.5.zip
+                            </url>
+                        </zipUrlInstaller>
+                    </container>
+
+                    <deployables>
+                        <deployable>
+                            <groupId>com.github.legacycode</groupId>
+                            <artifactId>legacycode-jakarta</artifactId>
+                            <type>war</type>
+                        </deployable>
+                    </deployables>
+                </configuration>
             </plugin>
 
             <plugin>

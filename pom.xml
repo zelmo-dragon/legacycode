@@ -57,11 +57,10 @@
 
         <!-- Version des dépendances -->
         <version.java>11</version.java>
-        <version.jakarta>8.0.0</version.jakarta>
+        <version.jakarta>9.1.0</version.jakarta>
         <version.junit>5.8.2</version.junit>
-        <version.eclipselink>2.7.10</version.eclipselink>
-        <version.mapstruct>1.4.2.Final</version.mapstruct>
-        <version.lombok>1.18.22</version.lombok>
+        <version.eclipselink>3.0.2</version.eclipselink>
+        <version.h2>2.1.212</version.h2>
 
         <!-- Configuration -->
         <maven.compiler.source>${version.java}</maven.compiler.source>
@@ -88,19 +87,9 @@
                 <version>${version.eclipselink}</version>
             </dependency>
             <dependency>
-                <groupId>org.mapstruct</groupId>
-                <artifactId>mapstruct</artifactId>
-                <version>${version.mapstruct}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.mapstruct</groupId>
-                <artifactId>mapstruct-processor</artifactId>
-                <version>${version.mapstruct}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok</artifactId>
-                <version>${version.lombok}</version>
+                <groupId>com.h2database</groupId>
+                <artifactId>h2</artifactId>
+                <version>${version.h2}</version>
             </dependency>
 
             <!-- Junit -->

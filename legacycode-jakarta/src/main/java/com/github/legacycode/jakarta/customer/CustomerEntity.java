@@ -1,14 +1,18 @@
 package com.github.legacycode.jakarta.customer;
 
-import javax.persistence.Access;
-import javax.persistence.AccessType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import jakarta.persistence.Access;
+import jakarta.persistence.AccessType;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import com.github.legacycode.jakarta.persistence.AbstractEntity;
 import com.github.legacycode.jakarta.gender.GenderEntity;
@@ -37,7 +41,8 @@ public class CustomerEntity extends AbstractEntity {
     private String email;
 
     @NotNull
-    @Column(name = "gender", nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH})
+    @JoinColumn(name = "gender_id", nullable = false)
     private GenderEntity gender;
 
     @NotBlank
