@@ -6,7 +6,7 @@ import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 
-import com.github.legacycode.jakarta.persistence.AbstractDAO;
+import com.github.legacycode.jakarta.AbstractDAO;
 
 @Dependent
 public class CustomerDAO extends AbstractDAO<CustomerEntity, UUID> implements Serializable {

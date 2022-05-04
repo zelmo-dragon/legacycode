@@ -8,7 +8,7 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-import com.github.legacycode.jakarta.persistence.AbstractEntity;
+import com.github.legacycode.jakarta.AbstractEntity;
 
 @Entity
 @Table(name = "gender")

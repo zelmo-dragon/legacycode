@@ -1,4 +1,4 @@
-package com.github.legacycode.jakarta.persistence;
+package com.github.legacycode.jakarta;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;

@@ -1,4 +1,4 @@
-package com.github.legacycode.jakarta.common;
+package com.github.legacycode.jakarta.dynamic;
 
 
 import java.io.Serializable;

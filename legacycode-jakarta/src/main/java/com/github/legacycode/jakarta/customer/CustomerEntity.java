@@ -14,7 +14,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-import com.github.legacycode.jakarta.persistence.AbstractEntity;
+import com.github.legacycode.jakarta.AbstractEntity;
 import com.github.legacycode.jakarta.gender.GenderEntity;
 
 @Entity
