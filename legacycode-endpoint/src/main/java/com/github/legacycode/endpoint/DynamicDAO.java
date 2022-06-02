@@ -121,18 +121,22 @@ public class DynamicDAO implements Serializable {
                 .getSingleResult();
     }
 
-    public <E> boolean contains(E entity) {
+    public <E> boolean contains(final E entity) {
         var entityClass = (Class<E>) entity.getClass();
         var cb = this.em.getCriteriaBuilder();
         var cq = cb.createQuery(Long.class);
         var root = cq.from(entityClass);
         cq.select(cb.count(root));
-        var puu = this.em.getEntityManagerFactory().getPersistenceUnitUtil();
-        var id = puu.getIdentifier(entity);
+        var id = getPrimaryKey(entity);
         var attribut = getPrimaryKeyAttribut(this.em, entityClass);
         var p0 = cb.equal(root.get(attribut), id);
         cq.where(p0);
         return this.em.createQuery(cq).getSingleResult() > 0;
+    }
+
+    public <E, K> K getPrimaryKey(final E entity) {
+        var puu = this.em.getEntityManagerFactory().getPersistenceUnitUtil();
+        return (K) puu.getIdentifier(entity);
     }
 
     private static <E> SingularAttribute<E, ?> getPrimaryKeyAttribut(

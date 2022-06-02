@@ -1,15 +1,16 @@
 package com.github.legacycode.endpoint;
 
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.List;
 import jakarta.json.bind.annotation.JsonbProperty;
 import jakarta.json.bind.annotation.JsonbPropertyOrder;
 import jakarta.json.bind.config.PropertyOrderStrategy;
 
 @JsonbPropertyOrder(PropertyOrderStrategy.LEXICOGRAPHICAL)
-public class PaginationData<E> {
+public class PaginationData<T> {
 
     @JsonbProperty("data")
-    private Collection<E> data;
+    private List<T> data;
 
     @JsonbProperty("size")
     private long size;
@@ -24,16 +25,22 @@ public class PaginationData<E> {
     private long pageCount;
 
     public PaginationData() {
+        this.data = new ArrayList<>();
+    }
+
+    public boolean isEmpty() {
+        return this.data.isEmpty();
     }
 
     // Accesseurs & Mutateurs
 
-    public Collection<E> getData() {
-        return data;
+    public List<T> getData() {
+        return List.copyOf(data);
     }
 
-    public void setData(Collection<E> data) {
-        this.data = data;
+    public void setData(List<T> data) {
+        this.data.clear();
+        this.data.addAll(data);
     }
 
     public long getSize() {

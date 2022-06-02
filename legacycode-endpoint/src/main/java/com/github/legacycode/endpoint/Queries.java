@@ -69,6 +69,11 @@ final class Queries {
                 .orElse(DEFAULT_PAGE_SIZE);
     }
 
+    static int getPageCount(final Set<DynamicQuery> queries, final long count) {
+        var pageSize = Queries.getPageSize(queries);
+        return (int) ((count - 1) / pageSize) + 1;
+    }
+
     static Set<DynamicQuery> extractQueries(final Map<String, List<String>> parameters) {
 
         return parameters
