@@ -1,4 +1,4 @@
-package com.github.legacycode.jakarta.dynamic;
+package com.github.legacycode.endpoint;
 
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;

@@ -1,11 +1,11 @@
-package com.github.legacycode.jakarta.dynamic;
+package com.github.legacycode.endpoint;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public final class DynamicQuery {
+final class DynamicQuery {
 
     private static final String ORDER_BY_QUERY = "orderBy";
 
@@ -16,6 +16,8 @@ public final class DynamicQuery {
     private static final String DISTINCT_QUERY = "distinct";
 
     private static final String KEYWORD_QUERY = "keyword";
+
+    private static final String SELECT_QUERY = "select";
 
     private static final String ORDER_ASC_SYMBOL = "+";
 
@@ -95,6 +97,10 @@ public final class DynamicQuery {
 
     boolean isKeywordQuery() {
         return this.isBasicQuery() && Objects.equals(this.name, KEYWORD_QUERY);
+    }
+
+    boolean isSelectQuery() {
+        return this.isBasicQuery() && Objects.equals(this.name, SELECT_QUERY);
     }
 
     String getBetweenFirstValue() {

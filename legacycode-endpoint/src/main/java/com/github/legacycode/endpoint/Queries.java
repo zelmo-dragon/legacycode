@@ -1,4 +1,4 @@
-package com.github.legacycode.jakarta.dynamic;
+package com.github.legacycode.endpoint;
 
 import java.util.List;
 import java.util.Map;
@@ -69,13 +69,33 @@ final class Queries {
                 .orElse(DEFAULT_PAGE_SIZE);
     }
 
-    static Set<DynamicQuery> extractParameters(final Map<String, List<String>> parameters) {
+    static Set<DynamicQuery> extractQueries(final Map<String, List<String>> parameters) {
 
         return parameters
                 .entrySet()
                 .stream()
-                .map(e -> new DynamicQuery(e.getKey(), e.getValue()))
+                .map(e -> extractQuery(e.getKey(), e.getValue()))
                 .collect(Collectors.toSet());
     }
+
+    static DynamicQuery extractQuery(final String parameterName, final List<String> values) {
+
+        var bracketOpen = parameterName.indexOf("[");
+        var bracketClose = parameterName.indexOf("]");
+
+        String name;
+        Operator operator;
+
+        if (bracketOpen == -1 || bracketClose == -1 || bracketOpen < bracketClose) {
+            name = parameterName;
+            operator = Operator.NONE;
+        } else {
+            name = parameterName.substring(0, bracketOpen);
+            var rawOperator = parameterName.substring(bracketOpen + 1, bracketClose);
+            operator = Operator.parse(rawOperator);
+        }
+        return new DynamicQuery(name, values, operator);
+    }
+
 
 }

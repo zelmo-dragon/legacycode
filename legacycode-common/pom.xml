@@ -13,10 +13,10 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>legacycode-util</artifactId>
+    <artifactId>legacycode-common</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <name>legacycode-util</name>
+    <name>legacycode-common</name>
 
     <properties>
 

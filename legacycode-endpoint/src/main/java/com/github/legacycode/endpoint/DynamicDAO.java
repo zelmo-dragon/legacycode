@@ -1,4 +1,4 @@
-package com.github.legacycode.jakarta.dynamic;
+package com.github.legacycode.endpoint;
 
 
 import java.io.Serializable;
@@ -18,6 +18,7 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.Order;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
+import jakarta.persistence.criteria.Selection;
 import jakarta.persistence.metamodel.Attribute;
 import jakarta.persistence.metamodel.SingularAttribute;
 
@@ -78,6 +79,7 @@ public class DynamicDAO implements Serializable {
             final Set<DynamicQuery> queries) {
 
         var distinct = Queries.isDistinct(queries);
+
         CriteriaPredicate<E, E> predicate = (b, r, q) -> {
             q.distinct(distinct);
             q.select(r);
@@ -224,53 +226,43 @@ public class DynamicDAO implements Serializable {
 
         Predicate predicate;
         if (!query.isBasicQuery()) {
-            switch (query.getOperator()) {
-                case EQUAL:
-                    predicate = DynamicPredicate.equal(builder, root, query);
-                    break;
-                case NOT_EQUAL:
-                    predicate = DynamicPredicate.notEqual(builder, root, query);
-                    break;
-                case LIKE:
-                    predicate = DynamicPredicate.like(builder, root, query);
-                    break;
-                case NOT_LIKE:
-                    predicate = DynamicPredicate.notLike(builder, root, query);
-                    break;
-                case GREATER_THAN:
-                    predicate = DynamicPredicate.greaterThan(builder, root, query);
-                    break;
-                case GREATER_THAN_OR_EQUAL:
-                    predicate = DynamicPredicate.greaterThanOrEqual(builder, root, query);
-                    break;
-                case LESS_THAN:
-                    predicate = DynamicPredicate.lessThan(builder, root, query);
-                    break;
-                case LESS_THAN_OR_EQUAL:
-                    predicate = DynamicPredicate.lessThanOrEqual(builder, root, query);
-                    break;
-                case IN:
-                    predicate = DynamicPredicate.in(builder, root, query);
-                    break;
-                case NOT_IN:
-                    predicate = DynamicPredicate.notIn(builder, root, query);
-                    break;
-                case BETWEEN:
-                    predicate = DynamicPredicate.between(builder, root, query);
-                    break;
-                case NOT_BETWEEN:
-                    predicate = DynamicPredicate.notBetween(builder, root, query);
-                    break;
-                default:
-                    predicate = null;
-                    break;
-            }
+            predicate = switch (query.getOperator()) {
+                case EQUAL -> DynamicPredicate.equal(builder, root, query);
+                case NOT_EQUAL -> DynamicPredicate.notEqual(builder, root, query);
+                case LIKE -> DynamicPredicate.like(builder, root, query);
+                case NOT_LIKE -> DynamicPredicate.notLike(builder, root, query);
+                case GREATER_THAN -> DynamicPredicate.greaterThan(builder, root, query);
+                case GREATER_THAN_OR_EQUAL -> DynamicPredicate.greaterThanOrEqual(builder, root, query);
+                case LESS_THAN -> DynamicPredicate.lessThan(builder, root, query);
+                case LESS_THAN_OR_EQUAL -> DynamicPredicate.lessThanOrEqual(builder, root, query);
+                case IN -> DynamicPredicate.in(builder, root, query);
+                case NOT_IN -> DynamicPredicate.notIn(builder, root, query);
+                case BETWEEN -> DynamicPredicate.between(builder, root, query);
+                case NOT_BETWEEN -> DynamicPredicate.notBetween(builder, root, query);
+                default -> null;
+            };
         } else if (query.isKeywordQuery()) {
             predicate = DynamicPredicate.keyword(builder, root, query);
         } else {
             predicate = null;
         }
         return Optional.ofNullable(predicate);
+    }
+
+    private static <E, X> List<Selection<X>> buildSelection(
+            final EntityManager em,
+            final Class<E> entityClass,
+            final CriteriaBuilder builder,
+            final Root<E> root,
+            final DynamicQuery select) {
+
+        var selections = root
+                .getCompoundSelectionItems()
+                .stream()
+                .filter(Selection::isCompoundSelection)
+                .toList();
+
+        return List.of();
     }
 
     private static <E> boolean isSafeSearchQuery(

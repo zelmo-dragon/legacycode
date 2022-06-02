@@ -1,4 +1,4 @@
-module legacycode.util {
+module legacycode.common {
 
     requires java.base;
 

@@ -1,9 +1,9 @@
-package com.github.legacycode.jakarta.dynamic;
+package com.github.legacycode.endpoint;
 
 import java.util.Objects;
 import java.util.stream.Stream;
 
-public enum Operator {
+enum Operator {
 
     EQUAL("eq"),
 

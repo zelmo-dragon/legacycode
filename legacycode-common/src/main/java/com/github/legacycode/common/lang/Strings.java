@@ -11,7 +11,7 @@ public final class Strings {
     public static String stripAccent(final String word) {
         return Normalizer
                 .normalize(word, Normalizer.Form.NFD)
-                .replaceAll("[\\p{InCombiningDiacriticalMarks}]", "")
+                .replaceAll("[\\p{InCombiningDiacriticalMarks}]", "_")
                 .toLowerCase();
     }
 }

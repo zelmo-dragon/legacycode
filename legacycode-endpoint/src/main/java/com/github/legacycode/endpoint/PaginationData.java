@@ -1,4 +1,4 @@
-package com.github.legacycode.jakarta.dynamic;
+package com.github.legacycode.endpoint;
 
 import java.util.Collection;
 import jakarta.json.bind.annotation.JsonbProperty;
@@ -27,7 +27,6 @@ public class PaginationData<E> {
     }
 
     // Accesseurs & Mutateurs
-
 
     public Collection<E> getData() {
         return data;

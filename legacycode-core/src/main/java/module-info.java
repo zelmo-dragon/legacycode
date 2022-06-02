@@ -3,7 +3,7 @@ module legacy.core {
     requires java.base;
     requires java.sql;
 
-    requires legacycode.util;
+    requires legacycode.common;
 
     exports com.github.legacycode.core;
     exports com.github.legacycode.core.common;
