@@ -1,4 +1,4 @@
-package com.github.legacycode.endpoint;
+package com.github.legacycode.endpoint.internal;
 
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
@@ -15,6 +15,8 @@ import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
+
+import com.github.legacycode.endpoint.EntryManager;
 
 @RequestScoped
 @Path("entity")
@@ -35,10 +37,9 @@ public class DynamicEndpoint {
             @Context final UriInfo info,
             @PathParam("entity") final String entity) {
 
-        var rawQueries = info.getQueryParameters();
-        var queries = Queries.extractQueries(rawQueries);
+        var parameters = info.getQueryParameters();
         var service = this.entryManager.invokeService(entity);
-        var paginationData = service.onFilter(entity, queries);
+        var paginationData = service.onFilter(entity, parameters);
         return Response.ok(paginationData).build();
     }
 

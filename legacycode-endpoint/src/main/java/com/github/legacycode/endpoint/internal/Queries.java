@@ -1,4 +1,4 @@
-package com.github.legacycode.endpoint;
+package com.github.legacycode.endpoint.internal;
 
 import java.util.List;
 import java.util.Map;
@@ -24,57 +24,58 @@ final class Queries {
     );
 
     private Queries() {
+        throw new UnsupportedOperationException("Instance not allowed");
     }
 
     static <T> T asValue(final Class<T> type, final String rawValue) {
         return (T) CONVERTERS.get(type).apply(rawValue);
     }
 
-    static <T> T asValue(final Class<T> type, final DynamicQuery query) {
+    static <T> T asValue(final Class<T> type, final FilterQuery query) {
         return (T) CONVERTERS.get(type).apply(query.getSingleValue());
     }
 
-    static <T> List<T> asValues(final Class<T> type, final DynamicQuery query) {
+    static <T> List<T> asValues(final Class<T> type, final FilterQuery query) {
 
-        return query.getValues()
+        return query.values()
                 .stream()
                 .map(s -> (T) CONVERTERS.get(type).apply(s))
                 .collect(Collectors.toList());
     }
 
-    static boolean isDistinct(final Set<DynamicQuery> queries) {
+    static boolean isDistinct(final Set<FilterQuery> queries) {
         return queries
                 .stream()
-                .filter(DynamicQuery::isQueryDistinct)
+                .filter(FilterQuery::isQueryDistinct)
                 .map(q -> asValue(Boolean.class, q))
                 .findFirst()
                 .orElse(Boolean.FALSE);
     }
 
-    static int getPageNumber(final Set<DynamicQuery> queries) {
+    static int getPageNumber(final Set<FilterQuery> queries) {
         return queries
                 .stream()
-                .filter(DynamicQuery::isPageNumberQuery)
+                .filter(FilterQuery::isPageNumberQuery)
                 .map(q -> asValue(Integer.class, q))
                 .findFirst()
                 .orElse(DEFAULT_PAGE_NUMBER);
     }
 
-    static int getPageSize(final Set<DynamicQuery> queries) {
+    static int getPageSize(final Set<FilterQuery> queries) {
         return queries
                 .stream()
-                .filter(DynamicQuery::isPageSizeQuery)
+                .filter(FilterQuery::isPageSizeQuery)
                 .map(q -> asValue(Integer.class, q))
                 .findFirst()
                 .orElse(DEFAULT_PAGE_SIZE);
     }
 
-    static int getPageCount(final Set<DynamicQuery> queries, final long count) {
+    static int getPageCount(final Set<FilterQuery> queries, final long count) {
         var pageSize = Queries.getPageSize(queries);
         return (int) ((count - 1) / pageSize) + 1;
     }
 
-    static Set<DynamicQuery> extractQueries(final Map<String, List<String>> parameters) {
+    static Set<FilterQuery> extractQueries(final Map<String, List<String>> parameters) {
 
         return parameters
                 .entrySet()
@@ -83,7 +84,7 @@ final class Queries {
                 .collect(Collectors.toSet());
     }
 
-    static DynamicQuery extractQuery(final String parameterName, final List<String> values) {
+    static FilterQuery extractQuery(final String parameterName, final List<String> values) {
 
         var bracketOpen = parameterName.indexOf("[");
         var bracketClose = parameterName.indexOf("]");
@@ -99,7 +100,7 @@ final class Queries {
             var rawOperator = parameterName.substring(bracketOpen + 1, bracketClose);
             operator = Operator.parse(rawOperator);
         }
-        return new DynamicQuery(name, values, operator);
+        return new FilterQuery(name, values, operator);
     }
 
 

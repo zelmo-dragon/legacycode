@@ -1,11 +1,11 @@
-package com.github.legacycode.endpoint;
+package com.github.legacycode.endpoint.internal;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-final class DynamicQuery {
+record FilterQuery(String name, List<String> values, Operator operator) {
 
     private static final String ORDER_BY_QUERY = "orderBy";
 
@@ -26,52 +26,6 @@ final class DynamicQuery {
     private static final int BETWEEN_FIRST_ARGUMENT = 0;
 
     private static final int BETWEEN_SECOND_ARGUMENT = 1;
-
-    private final String name;
-
-    private final List<String> values;
-
-    private final Operator operator;
-
-    DynamicQuery(final String name, final List<String> values, final Operator operator) {
-        this.name = name;
-        this.values = List.copyOf(values);
-        this.operator = operator;
-    }
-
-    DynamicQuery(final String name, final List<String> values) {
-        this(name, values, Operator.NONE);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        boolean eq;
-        if (this == obj) {
-            eq = true;
-        } else if (obj == null || getClass() != obj.getClass()) {
-            eq = false;
-        } else {
-            var webQuery = (DynamicQuery) obj;
-            eq = Objects.equals(name, webQuery.name)
-                    && Objects.equals(values, webQuery.values)
-                    && operator == webQuery.operator;
-        }
-        return eq;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, values, operator);
-    }
-
-    @Override
-    public String toString() {
-        return new StringBuilder(this.getClass().getSimpleName())
-                .append("{name='").append(name).append('\'')
-                .append(", values='").append(values).append('\'')
-                .append(", operator=").append(operator)
-                .append('}').toString();
-    }
 
     // Accesseurs
 
@@ -128,10 +82,6 @@ final class DynamicQuery {
         return orders;
     }
 
-    String getName() {
-        return name;
-    }
-
     String getSingleValue() {
         String value;
         if (!this.values.isEmpty()) {
@@ -140,14 +90,6 @@ final class DynamicQuery {
             value = null;
         }
         return value;
-    }
-
-    List<String> getValues() {
-        return values;
-    }
-
-    Operator getOperator() {
-        return operator;
     }
 
 }

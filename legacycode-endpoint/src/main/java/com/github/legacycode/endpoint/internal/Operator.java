@@ -1,4 +1,4 @@
-package com.github.legacycode.endpoint;
+package com.github.legacycode.endpoint.internal;
 
 import java.util.Objects;
 import java.util.stream.Stream;

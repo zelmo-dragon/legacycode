@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
-public interface DynamicMapper<E, D> {
+public interface EntityMapper<E, D> {
 
     E toEntity(D data);
 
@@ -17,17 +17,17 @@ public interface DynamicMapper<E, D> {
 
     }
 
-    D toData(E entity);
+    D fromEntity(E entity);
 
-    default List<D> toData(List<E> entities) {
+    default List<D> fromEntity(List<E> entities) {
         return Optional
                 .ofNullable(entities)
                 .map(Collection::stream)
-                .map(d -> d.map(this::toData).toList())
+                .map(d -> d.map(this::fromEntity).toList())
                 .orElseGet(List::of);
 
     }
 
-    void updateFromData(D source, E target);
+    void updateEntity(D source, E target);
 
 }

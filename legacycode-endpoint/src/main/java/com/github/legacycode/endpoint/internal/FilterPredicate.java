@@ -1,4 +1,4 @@
-package com.github.legacycode.endpoint;
+package com.github.legacycode.endpoint.internal;
 
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -11,16 +11,16 @@ import com.github.legacycode.common.lang.Strings;
 
 
 @FunctionalInterface
-public interface DynamicPredicate<X> {
+interface FilterPredicate<X> {
 
-    Predicate toPredicate(CriteriaBuilder builder, Root<X> root, DynamicQuery query);
+    Predicate toPredicate(CriteriaBuilder builder, Root<X> root, FilterQuery query);
 
     static <X, V extends Comparable<V>> Predicate equal(
             final CriteriaBuilder builder,
             final Root<X> root,
-            final DynamicQuery query) {
+            final FilterQuery query) {
 
-        var attribute = root.<V>get(query.getName());
+        var attribute = root.<V>get(query.name());
         var type = attribute.getModel().getBindableJavaType();
 
         return Stream.of(query)
@@ -33,17 +33,17 @@ public interface DynamicPredicate<X> {
     static <X, V extends Comparable<V>> Predicate notEqual(
             final CriteriaBuilder builder,
             final Root<X> root,
-            final DynamicQuery query) {
+            final FilterQuery query) {
 
-        return DynamicPredicate.equal(builder, root, query).not();
+        return FilterPredicate.equal(builder, root, query).not();
     }
 
     static <X> Predicate like(
             final CriteriaBuilder builder,
             final Root<X> root,
-            final DynamicQuery query) {
+            final FilterQuery query) {
 
-        var attribute = root.<String>get(query.getName());
+        var attribute = root.<String>get(query.name());
 
         return Stream.of(query)
                 .flatMap(q -> Queries.asValues(String.class, q).stream())
@@ -55,17 +55,17 @@ public interface DynamicPredicate<X> {
     static <X> Predicate notLike(
             final CriteriaBuilder builder,
             final Root<X> root,
-            final DynamicQuery query) {
+            final FilterQuery query) {
 
-        return DynamicPredicate.like(builder, root, query).not();
+        return FilterPredicate.like(builder, root, query).not();
     }
 
     static <X, V extends Comparable<V>> Predicate greaterThan(
             final CriteriaBuilder builder,
             final Root<X> root,
-            final DynamicQuery query) {
+            final FilterQuery query) {
 
-        var attribute = root.<V>get(query.getName());
+        var attribute = root.<V>get(query.name());
         var type = attribute.getModel().getBindableJavaType();
 
         return Stream.of(query)
@@ -78,9 +78,9 @@ public interface DynamicPredicate<X> {
     static <X, V extends Comparable<V>> Predicate greaterThanOrEqual(
             final CriteriaBuilder builder,
             final Root<X> root,
-            final DynamicQuery query) {
+            final FilterQuery query) {
 
-        var attribute = root.<V>get(query.getName());
+        var attribute = root.<V>get(query.name());
         var type = attribute.getModel().getBindableJavaType();
 
         return Stream.of(query)
@@ -93,9 +93,9 @@ public interface DynamicPredicate<X> {
     static <X, V extends Comparable<V>> Predicate lessThan(
             final CriteriaBuilder builder,
             final Root<X> root,
-            final DynamicQuery query) {
+            final FilterQuery query) {
 
-        var attribute = root.<V>get(query.getName());
+        var attribute = root.<V>get(query.name());
         var type = attribute.getModel().getBindableJavaType();
 
         return Stream.of(query)
@@ -108,9 +108,9 @@ public interface DynamicPredicate<X> {
     static <X, V extends Comparable<V>> Predicate lessThanOrEqual(
             final CriteriaBuilder builder,
             final Root<X> root,
-            final DynamicQuery query) {
+            final FilterQuery query) {
 
-        var attribute = root.<V>get(query.getName());
+        var attribute = root.<V>get(query.name());
         var type = attribute.getModel().getBindableJavaType();
 
         return Stream.of(query)
@@ -123,26 +123,26 @@ public interface DynamicPredicate<X> {
     static <X, V extends Comparable<V>> Predicate in(
             final CriteriaBuilder builder,
             final Root<X> root,
-            final DynamicQuery query) {
+            final FilterQuery query) {
 
-        var attribute = root.<V>get(query.getName());
-        return attribute.in(query.getValues());
+        var attribute = root.<V>get(query.name());
+        return attribute.in(query.values());
     }
 
     static <X, V extends Comparable<V>> Predicate notIn(
             final CriteriaBuilder builder,
             final Root<X> root,
-            final DynamicQuery query) {
+            final FilterQuery query) {
 
-        return DynamicPredicate.in(builder, root, query).not();
+        return FilterPredicate.in(builder, root, query).not();
     }
 
     static <X, V extends Comparable<V>> Predicate between(
             final CriteriaBuilder builder,
             final Root<X> root,
-            final DynamicQuery query) {
+            final FilterQuery query) {
 
-        var attribute = root.<V>get(query.getName());
+        var attribute = root.<V>get(query.name());
         var type = attribute.getModel().getBindableJavaType();
 
         return builder.between(
@@ -155,15 +155,15 @@ public interface DynamicPredicate<X> {
     static <X, V extends Comparable<V>> Predicate notBetween(
             final CriteriaBuilder builder,
             final Root<X> root,
-            final DynamicQuery query) {
+            final FilterQuery query) {
 
-        return DynamicPredicate.between(builder, root, query).not();
+        return FilterPredicate.between(builder, root, query).not();
     }
 
     static <X> Predicate keyword(
             final CriteriaBuilder builder,
             final Root<X> root,
-            final DynamicQuery query) {
+            final FilterQuery query) {
 
         return root
                 .getModel()

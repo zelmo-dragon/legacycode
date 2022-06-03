@@ -2,15 +2,15 @@ package com.github.legacycode.endpoint;
 
 import java.io.Serial;
 
-public class ActionException extends RuntimeException {
+public final class ActionDeniedException extends RuntimeException {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
     private final Action action;
 
-    public ActionException(final Action action) {
-        super();
+    public ActionDeniedException(final Action action) {
+        super(String.format("Action type [%s] denied !", action));
         this.action = action;
     }
 
