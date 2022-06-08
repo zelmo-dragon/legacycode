@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-record FilterQuery(String name, List<String> values, Operator operator) {
+final class FilterQuery {
 
     private static final String ORDER_BY_QUERY = "orderBy";
 
@@ -27,7 +27,61 @@ record FilterQuery(String name, List<String> values, Operator operator) {
 
     private static final int BETWEEN_SECOND_ARGUMENT = 1;
 
+    private final String name;
+
+    private final List<String> values;
+
+    private final Operator operator;
+
+    FilterQuery(final String name, final List<String> values, final Operator operator) {
+        this.name = name;
+        this.values = List.copyOf(values);
+        this.operator = operator;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        boolean eq;
+        if (this == obj) {
+            eq = true;
+        } else if (obj == null || getClass() != obj.getClass()) {
+            eq = false;
+        } else {
+            var webQuery = (FilterQuery) obj;
+            eq = Objects.equals(name, webQuery.name)
+                    && Objects.equals(values, webQuery.values)
+                    && operator == webQuery.operator;
+        }
+        return eq;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, values, operator);
+    }
+
+    @Override
+    public String toString() {
+        return new StringBuilder(this.getClass().getSimpleName())
+                .append("{name='").append(name).append('\'')
+                .append(", values='").append(values).append('\'')
+                .append(", operator=").append(operator)
+                .append('}').toString();
+    }
+
     // Accesseurs
+
+    public String getName() {
+        return name;
+    }
+
+    public List<String> getValues() {
+        return List.copyOf(values);
+    }
+
+    public Operator getOperator() {
+        return operator;
+    }
 
     boolean isBasicQuery() {
         return Objects.equals(this.operator, Operator.NONE);

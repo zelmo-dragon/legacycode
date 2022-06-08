@@ -20,7 +20,7 @@ interface FilterPredicate<X> {
             final Root<X> root,
             final FilterQuery query) {
 
-        var attribute = root.<V>get(query.name());
+        var attribute = root.<V>get(query.getName());
         var type = attribute.getModel().getBindableJavaType();
 
         return Stream.of(query)
@@ -43,7 +43,7 @@ interface FilterPredicate<X> {
             final Root<X> root,
             final FilterQuery query) {
 
-        var attribute = root.<String>get(query.name());
+        var attribute = root.<String>get(query.getName());
 
         return Stream.of(query)
                 .flatMap(q -> Queries.asValues(String.class, q).stream())
@@ -65,7 +65,7 @@ interface FilterPredicate<X> {
             final Root<X> root,
             final FilterQuery query) {
 
-        var attribute = root.<V>get(query.name());
+        var attribute = root.<V>get(query.getName());
         var type = attribute.getModel().getBindableJavaType();
 
         return Stream.of(query)
@@ -80,7 +80,7 @@ interface FilterPredicate<X> {
             final Root<X> root,
             final FilterQuery query) {
 
-        var attribute = root.<V>get(query.name());
+        var attribute = root.<V>get(query.getName());
         var type = attribute.getModel().getBindableJavaType();
 
         return Stream.of(query)
@@ -95,7 +95,7 @@ interface FilterPredicate<X> {
             final Root<X> root,
             final FilterQuery query) {
 
-        var attribute = root.<V>get(query.name());
+        var attribute = root.<V>get(query.getName());
         var type = attribute.getModel().getBindableJavaType();
 
         return Stream.of(query)
@@ -110,7 +110,7 @@ interface FilterPredicate<X> {
             final Root<X> root,
             final FilterQuery query) {
 
-        var attribute = root.<V>get(query.name());
+        var attribute = root.<V>get(query.getName());
         var type = attribute.getModel().getBindableJavaType();
 
         return Stream.of(query)
@@ -125,8 +125,8 @@ interface FilterPredicate<X> {
             final Root<X> root,
             final FilterQuery query) {
 
-        var attribute = root.<V>get(query.name());
-        return attribute.in(query.values());
+        var attribute = root.<V>get(query.getName());
+        return attribute.in(query.getValues());
     }
 
     static <X, V extends Comparable<V>> Predicate notIn(
@@ -142,7 +142,7 @@ interface FilterPredicate<X> {
             final Root<X> root,
             final FilterQuery query) {
 
-        var attribute = root.<V>get(query.name());
+        var attribute = root.<V>get(query.getName());
         var type = attribute.getModel().getBindableJavaType();
 
         return builder.between(

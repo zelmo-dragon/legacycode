@@ -201,7 +201,7 @@ public class DAO implements Serializable {
 
         Predicate predicate;
         if (!query.isBasicQuery()) {
-            predicate = switch (query.operator()) {
+            predicate = switch (query.getOperator()) {
                 case EQUAL -> FilterPredicate.equal(builder, root, query);
                 case NOT_EQUAL -> FilterPredicate.notEqual(builder, root, query);
                 case LIKE -> FilterPredicate.like(builder, root, query);
@@ -235,7 +235,7 @@ public class DAO implements Serializable {
                 .getAttributes()
                 .stream()
                 .filter(a -> Objects.equals(a.getPersistentAttributeType(), Attribute.PersistentAttributeType.BASIC))
-                .anyMatch(a -> Objects.equals(a.getName(), query.name()));
+                .anyMatch(a -> Objects.equals(a.getName(), query.getName()));
     }
 
     @FunctionalInterface

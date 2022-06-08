@@ -7,8 +7,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>legacycode</artifactId>
         <groupId>com.github.legacycode</groupId>
+        <artifactId>legacycode</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 

@@ -37,7 +37,7 @@ final class Queries {
 
     static <T> List<T> asValues(final Class<T> type, final FilterQuery query) {
 
-        return query.values()
+        return query.getValues()
                 .stream()
                 .map(s -> (T) CONVERTERS.get(type).apply(s))
                 .collect(Collectors.toList());

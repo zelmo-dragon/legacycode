@@ -5,10 +5,9 @@
         xsi:schemalocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
         version="3.0">
 
-    
     <persistence-unit name="legacycode-pu" transaction-type="JTA">
               
-        <jta-data-source>java:app/jdbc/LegacyCodeDS</jta-data-source>
+        <jta-data-source>jdbc/LegacyCodeDS</jta-data-source>
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <shared-cache-mode>ENABLE_SELECTIVE</shared-cache-mode>
         <validation-mode>CALLBACK</validation-mode>

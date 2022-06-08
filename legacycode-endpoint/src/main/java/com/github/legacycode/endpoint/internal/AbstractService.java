@@ -31,7 +31,7 @@ public abstract class AbstractService implements EndpointService {
         var entry = this.entryManager.<E, D, M, AbstractService>resolve(name);
         checkAction(entry, Action.FILTER);
 
-        var entityClass = entry.entityClass();
+        var entityClass = entry.getEntityClass();
         var mapper = this.entryManager.invokeMapper(entry);
         var queries = Queries.extractQueries(parameters);
 
@@ -59,7 +59,7 @@ public abstract class AbstractService implements EndpointService {
         var entry = this.entryManager.<E, D, M, AbstractService>resolve(name);
         checkAction(entry, Action.FIND);
 
-        var entityClass = entry.entityClass();
+        var entityClass = entry.getEntityClass();
         var mapper = this.entryManager.invokeMapper(entry);
 
         return this.dao
@@ -73,7 +73,7 @@ public abstract class AbstractService implements EndpointService {
         var entry = this.entryManager.<E, D, M, AbstractService>resolve(name);
         checkAction(entry, Action.CREATE);
 
-        var dataClass = entry.dataClass();
+        var dataClass = entry.getDataClass();
         var mapper = this.entryManager.invokeMapper(entry);
 
         var data = Jsons.parse(dataClass, document);
@@ -94,8 +94,8 @@ public abstract class AbstractService implements EndpointService {
         var entry = this.entryManager.<E, D, M, AbstractService>resolve(name);
         checkAction(entry, Action.UPDATE);
 
-        var entityClass = entry.entityClass();
-        var dataClass = entry.dataClass();
+        var entityClass = entry.getEntityClass();
+        var dataClass = entry.getDataClass();
         var mapper = this.entryManager.invokeMapper(entry);
 
         var data = Jsons.parse(dataClass, document);
@@ -113,12 +113,12 @@ public abstract class AbstractService implements EndpointService {
         var entry = this.entryManager.<E, D, M, AbstractService>resolve(name);
         checkAction(entry, Action.DELETE);
 
-        var entityClass = entry.entityClass();
+        var entityClass = entry.getEntityClass();
         this.dao.remove(entityClass, id);
     }
 
     protected static void checkAction(final EntityEntry<?, ?, ?, ?> entry, final Action action) {
-        if (!entry.actions().contains(action)) {
+        if (!entry.getActions().contains(action)) {
             throw new ActionDeniedException(action);
         }
     }

@@ -60,7 +60,9 @@
         <!-- Version des dépendances -->
         <version.java>17</version.java>
         <version.jakarta>9.1.0</version.jakarta>
+        <version.glassfish>6.2.5</version.glassfish>
         <version.junit>5.8.2</version.junit>
+        <version.rest-assured>5.1.0</version.rest-assured>
         <version.eclipselink>3.0.2</version.eclipselink>
         <version.h2>2.1.212</version.h2>
 
@@ -94,11 +96,22 @@
                 <version>${version.h2}</version>
             </dependency>
 
-            <!-- Junit -->
+            <!-- TEST -->
+
             <dependency>
                 <groupId>org.junit.jupiter</groupId>
-                <artifactId>junit-jupiter</artifactId>
+                <artifactId>junit-jupiter-api</artifactId>
                 <version>${version.junit}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-engine</artifactId>
+                <version>${version.junit}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.rest-assured</groupId>
+                <artifactId>rest-assured</artifactId>
+                <version>${version.rest-assured}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -110,7 +123,7 @@
                 <plugin>
                     <groupId>org.codehaus.cargo</groupId>
                     <artifactId>cargo-maven3-plugin</artifactId>
-                    <version>1.9.10</version>
+                    <version>1.9.11</version>
                 </plugin>
 
                 <!-- Extension Maven  -->

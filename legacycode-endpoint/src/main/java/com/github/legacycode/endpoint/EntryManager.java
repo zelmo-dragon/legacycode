@@ -22,7 +22,7 @@ public final class EntryManager {
     public <E, D, M extends EntityMapper<E, D>, S extends EndpointService> EntityEntry<E, D, M, S> resolve(final String name) {
         return (EntityEntry<E, D, M, S>) this.entries
                 .stream()
-                .filter(d -> Objects.equals(d.name(), name))
+                .filter(d -> Objects.equals(d.getName(), name))
                 .findFirst()
                 .orElseThrow(() -> new IllegalStateException("No entry registered for name : " + name));
     }
@@ -30,13 +30,13 @@ public final class EntryManager {
     public <E, D, M extends EntityMapper<E, D>, S extends EndpointService> S invokeService(final String name) {
 
         EntityEntry<E, D, M, S> entry = this.resolve(name);
-        Class<S> service = entry.serviceClass();
+        Class<S> service = entry.getServiceClass();
         return CDI.current().select(service).get();
     }
 
     public <E, D, M extends EntityMapper<E, D>, S extends EndpointService> M invokeMapper(final EntityEntry<E, D, M, S> entry) {
 
-        Class<M> mapper = entry.mapperClass();
+        Class<M> mapper = entry.getMapperClass();
         return CDI.current().select(mapper).get();
     }
 
