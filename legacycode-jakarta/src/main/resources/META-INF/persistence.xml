@@ -7,7 +7,7 @@
 
     <persistence-unit name="legacycode-pu" transaction-type="JTA">
               
-        <jta-data-source>jdbc/LegacyCodeDS</jta-data-source>
+        <jta-data-source>java:app/jdbc/LegacyCodeDS</jta-data-source>
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <shared-cache-mode>ENABLE_SELECTIVE</shared-cache-mode>
         <validation-mode>CALLBACK</validation-mode>
@@ -18,10 +18,10 @@
             Ce processus s'active à chaque déploiement de l'application 
             Utiliser les annotations JPA pour générer la base de données à la volée
             -->
-            <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create" />
+            <property name="jakarta.persistence.schema-generation.database.action" value="none" />
             <property name="jakarta.persistence.schema-generation.scripts.create-source"  value="metadata" />
             <property name="jakarta.persistence.schema-generation.scripts.drop-source" value="metadata" />
-            
+            <property name="jakarta.persistence.sql-load-script-source" value="derby-init.sql" />
             <!-- /!\ NON STANDARD JPA -->
             <!-- DEBUG uniquement -->
             <!-- Voir les requêtes SQL dans la console -->
