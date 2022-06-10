@@ -7,8 +7,7 @@ import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import jakarta.persistence.metamodel.Attribute;
 
-import com.github.legacycode.common.lang.Strings;
-
+import com.github.legacycode.core.util.lang.Strings;
 
 @FunctionalInterface
 interface FilterPredicate<X> {

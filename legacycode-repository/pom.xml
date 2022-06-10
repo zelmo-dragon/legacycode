@@ -9,17 +9,16 @@
     <parent>
         <groupId>com.github.legacycode</groupId>
         <artifactId>legacycode</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>0.0.2-SNAPSHOT</version>
     </parent>
 
     <artifactId>legacycode-repository</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>${project.parent.version}</version>
     <packaging>jar</packaging>
     <name>legacycode-repository</name>
 
     <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
+
     </properties>
 
     <dependencies>

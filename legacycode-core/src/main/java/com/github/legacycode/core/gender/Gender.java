@@ -4,12 +4,12 @@ import java.util.Comparator;
 import java.util.Objects;
 import java.util.UUID;
 
-import com.github.legacycode.common.lang.Empty;
-import com.github.legacycode.common.lang.Equals;
-import com.github.legacycode.common.lang.ToString;
-import com.github.legacycode.common.validation.Constraint;
-import com.github.legacycode.common.validation.Validator;
 import com.github.legacycode.core.Identifiable;
+import com.github.legacycode.core.util.lang.Empty;
+import com.github.legacycode.core.util.lang.Equals;
+import com.github.legacycode.core.util.lang.ToString;
+import com.github.legacycode.core.util.validation.Constraint;
+import com.github.legacycode.core.util.validation.Validator;
 
 public final class Gender implements Comparable<Gender>, Identifiable<UUID> {
 
