@@ -1,5 +1,6 @@
 package com.github.legacycode.repository;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
@@ -11,7 +12,9 @@ import jakarta.persistence.Version;
 @MappedSuperclass
 public abstract class AbstractEntity implements Entity<UUID>, Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
+
     @Id
     @Column(name = "id", nullable = false, unique = true, columnDefinition = "VARCHAR(36)")
     protected UUID id;

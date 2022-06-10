@@ -14,6 +14,9 @@ public class GenderDTO {
     @JsonbProperty("name")
     private String name;
 
+    @JsonbProperty("code")
+    private String code;
+
     @JsonbProperty("description")
     private String description;
 
@@ -34,6 +37,14 @@ public class GenderDTO {
 
     public void setName(final String name) {
         this.name = name;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(final String code) {
+        this.code = code;
     }
 
     public String getDescription() {

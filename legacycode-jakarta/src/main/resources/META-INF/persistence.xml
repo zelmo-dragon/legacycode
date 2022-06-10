@@ -12,6 +12,10 @@
         <shared-cache-mode>ENABLE_SELECTIVE</shared-cache-mode>
         <validation-mode>CALLBACK</validation-mode>
 
+        <!-- Dépendances externes -->
+        <class>com.github.legacycode.repository.UUIDConverter</class>
+        <class>com.github.legacycode.repository.AbstractEntity</class>
+
         <properties>
             <!-- 
             Génération automatique de la base de données
@@ -31,6 +35,6 @@
             <property name="eclipselink.logging.level.sql" value="FINE"/>
             <property name="eclipselink.logging.parameters" value="TRUE"/>
         </properties>
-        
+
     </persistence-unit>
 </persistence>

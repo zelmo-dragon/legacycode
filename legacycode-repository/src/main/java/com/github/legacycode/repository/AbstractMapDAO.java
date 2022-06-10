@@ -20,7 +20,9 @@ public abstract class AbstractMapDAO<K, E> implements Map<K, E> {
     }
 
     public Optional<E> find(K id) {
-        return Optional.ofNullable(this.get(id));
+        return Optional
+                .ofNullable(id)
+                .map(this::get);
     }
 
     public void put(E entity) {

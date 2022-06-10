@@ -13,6 +13,7 @@ public final class Jsons {
 
     public static <T> T parse(final Class<T> type, final String document) {
 
+
         var builder = JsonbBuilder.create();
         try (builder) {
             return builder.fromJson(document, type);
@@ -29,6 +30,16 @@ public final class Jsons {
             writer.writeObject(document);
             var text = stringWriter.toString();
             return parse(type, text);
+        } catch (Exception ex) {
+            throw new IllegalStateException(ex);
+        }
+    }
+
+    public static String parse(final Object entity) {
+
+        var builder = JsonbBuilder.create();
+        try (builder) {
+            return builder.toJson(entity);
         } catch (Exception ex) {
             throw new IllegalStateException(ex);
         }

@@ -30,6 +30,7 @@ public class GenderMapper implements EntityMapper<GenderEntity, GenderDTO> {
         var data = new GenderDTO();
         data.setId(entity.getId());
         data.setName(entity.getName());
+        data.setCode(entity.getCode());
         data.setDescription(entity.getDescription());
         return data;
     }
@@ -37,6 +38,7 @@ public class GenderMapper implements EntityMapper<GenderEntity, GenderDTO> {
     @Override
     public void updateEntity(final GenderDTO source, final GenderEntity target) {
         target.setName(source.getName());
+        target.setCode(source.getCode());
         target.setDescription(source.getDescription());
     }
 }

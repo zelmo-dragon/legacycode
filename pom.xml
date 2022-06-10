@@ -90,11 +90,6 @@
                 <artifactId>org.eclipse.persistence.jpa.modelgen.processor</artifactId>
                 <version>${version.eclipselink}</version>
             </dependency>
-            <dependency>
-                <groupId>com.h2database</groupId>
-                <artifactId>h2</artifactId>
-                <version>${version.h2}</version>
-            </dependency>
 
             <!-- TEST -->
 
