@@ -62,9 +62,10 @@ public abstract class AbstractService implements EndpointService {
 
         var entityClass = entry.getEntityClass();
         var mapper = this.endpointManager.invokeMapper(entry);
+        var uuid = mapper.mapId(id);
 
         return this.dao
-                .find(entityClass, id)
+                .find(entityClass, uuid)
                 .map(mapper::fromEntity);
     }
 
@@ -98,10 +99,11 @@ public abstract class AbstractService implements EndpointService {
         var entityClass = entry.getEntityClass();
         var dataClass = entry.getDataClass();
         var mapper = this.endpointManager.invokeMapper(entry);
+        var uuid = mapper.mapId(id);
 
         var data = Jsons.parse(dataClass, document);
         var entity = this.dao
-                .find(entityClass, id)
+                .find(entityClass, uuid)
                 .orElseThrow(() -> new EndpointException("Entity not exist !"));
 
         mapper.updateEntity(data, entity);
@@ -114,8 +116,11 @@ public abstract class AbstractService implements EndpointService {
         var entry = this.endpointManager.<E, D, M, AbstractService>resolve(name);
         checkAction(entry, Action.DELETE);
 
+        var mapper = this.endpointManager.invokeMapper(entry);
+        var uuid = mapper.mapId(id);
+
         var entityClass = entry.getEntityClass();
-        this.dao.remove(entityClass, id);
+        this.dao.remove(entityClass, uuid);
     }
 
     protected static void checkAction(final EndpointEntry<?, ?, ?, ?> entry, final Action action) {

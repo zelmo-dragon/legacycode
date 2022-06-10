@@ -20,3 +20,5 @@ ALTER TABLE customer ADD PRIMARY KEY(id)
 ALTER TABLE customer ADD FOREIGN KEY(gender_id) REFERENCES gender(id)
 ALTER TABLE customer ADD UNIQUE(email)
 
+INSERT INTO gender(id, version, name, code, description) VALUES ('09ee5d9d-bf9b-4b5d-aad0-19117eb8da34', 1, 'Male', 'M', 'A male humain')
+INSERT INTO gender(id, version, name, code, description) VALUES ('337ac663-48da-4a97-ad55-062a2c2ebb6d', 1, 'Female', 'F', 'A female humain')

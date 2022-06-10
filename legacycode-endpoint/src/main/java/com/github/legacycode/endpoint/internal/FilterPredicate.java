@@ -47,7 +47,10 @@ interface FilterPredicate<X> {
 
         return Stream.of(query)
                 .flatMap(q -> Queries.asValues(String.class, q).stream())
-                .map(v -> builder.like(attribute, v))
+                .map(v -> String.valueOf(v).toLowerCase())
+                .map(Strings::stripAccent)
+                .map(v -> "%" + v + "%")
+                .map(v -> builder.like(builder.lower(attribute), v))
                 .reduce(builder::or)
                 .orElseGet(() -> builder.isNull(attribute));
     }

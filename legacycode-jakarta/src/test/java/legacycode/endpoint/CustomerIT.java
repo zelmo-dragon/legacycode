@@ -2,6 +2,7 @@ package legacycode.endpoint;
 
 import io.restassured.RestAssured;
 import legacycode.util.WebContext;
+import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Test;
 
 public class CustomerIT {
@@ -19,6 +20,6 @@ public class CustomerIT {
                 .get(ENDPOINT)
                 .then()
                 .assertThat()
-                .statusCode(200);
+                .statusCode(HttpStatus.SC_OK);
     }
 }

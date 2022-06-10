@@ -92,7 +92,7 @@ final class Queries {
         String name;
         Operator operator;
 
-        if (bracketOpen == -1 || bracketClose == -1 || bracketOpen < bracketClose) {
+        if (bracketOpen == -1 || bracketClose == -1 || bracketOpen > bracketClose) {
             name = parameterName;
             operator = Operator.NONE;
         } else {

@@ -3,8 +3,13 @@ package com.github.legacycode.endpoint;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public interface EntityMapper<E, D> {
+
+    default <K> K mapId(String id) {
+        return (K) UUID.fromString(id);
+    }
 
     E toEntity(D data);
 
