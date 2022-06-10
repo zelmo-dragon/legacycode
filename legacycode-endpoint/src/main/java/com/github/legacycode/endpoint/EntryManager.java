@@ -7,7 +7,7 @@ import jakarta.enterprise.inject.spi.CDI;
 import jakarta.inject.Singleton;
 
 @Singleton
-public final class EntryManager {
+public class EntryManager {
 
     private final Set<EntityEntry<?, ?, ?, ?>> entries;
 

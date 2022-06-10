@@ -87,6 +87,9 @@
                             <groupId>com.github.legacycode</groupId>
                             <artifactId>legacycode-jakarta</artifactId>
                             <type>war</type>
+                            <properties>
+                                <context>/legacycode</context>
+                            </properties>
                         </deployable>
                     </deployables>
                 </configuration>

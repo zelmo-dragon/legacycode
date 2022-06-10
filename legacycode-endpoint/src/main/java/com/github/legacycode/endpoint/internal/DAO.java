@@ -8,8 +8,8 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
-import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceException;
 import jakarta.persistence.TypedQuery;
@@ -22,7 +22,7 @@ import jakarta.persistence.metamodel.Attribute;
 import jakarta.persistence.metamodel.SingularAttribute;
 
 
-@ApplicationScoped
+@Singleton
 public class DAO implements Serializable {
 
     private transient final EntityManager em;
