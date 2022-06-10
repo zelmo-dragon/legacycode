@@ -125,6 +125,11 @@
                     <artifactId>cargo-maven3-plugin</artifactId>
                     <version>1.9.11</version>
                 </plugin>
+                <plugin>
+                    <groupId>org.jacoco</groupId>
+                    <artifactId>jacoco-maven-plugin</artifactId>
+                    <version>0.8.8</version>
+                </plugin>
 
                 <!-- Extension Maven  -->
                 <plugin>

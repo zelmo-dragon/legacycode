@@ -16,7 +16,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
 
-import com.github.legacycode.endpoint.EntryManager;
+import com.github.legacycode.endpoint.EndpointManager;
 
 @RequestScoped
 @Path("entity")
@@ -24,11 +24,15 @@ import com.github.legacycode.endpoint.EntryManager;
 @Consumes(MediaType.APPLICATION_JSON)
 public class DynamicEndpoint {
 
-    private final EntryManager entryManager;
+    private final EndpointManager endpointManager;
+
+    DynamicEndpoint() {
+        this.endpointManager = null;
+    }
 
     @Inject
-    public DynamicEndpoint(final EntryManager entryManager) {
-        this.entryManager = entryManager;
+    public DynamicEndpoint(final EndpointManager endpointManager) {
+        this.endpointManager = endpointManager;
     }
 
     @GET
@@ -38,7 +42,7 @@ public class DynamicEndpoint {
             @PathParam("entity") final String entity) {
 
         var parameters = info.getQueryParameters();
-        var service = this.entryManager.invokeService(entity);
+        var service = this.endpointManager.invokeService(entity);
         var paginationData = service.onFilter(entity, parameters);
         return Response.ok(paginationData).build();
     }
@@ -48,7 +52,7 @@ public class DynamicEndpoint {
     public Response find(
             @PathParam("entity") final String entity,
             @PathParam("id") final String id) {
-        var service = this.entryManager.invokeService(entity);
+        var service = this.endpointManager.invokeService(entity);
         var data = service.onFind(entity, id);
 
         return data
@@ -63,7 +67,7 @@ public class DynamicEndpoint {
             @PathParam("entity") final String entity,
             final JsonObject document) {
 
-        var service = entryManager.invokeService(entity);
+        var service = endpointManager.invokeService(entity);
         var id = service.onCreate(entity, document);
 
         var uri = info
@@ -81,7 +85,7 @@ public class DynamicEndpoint {
             @PathParam("id") final String id,
             final JsonObject document) {
 
-        var service = entryManager.invokeService(entity);
+        var service = endpointManager.invokeService(entity);
         service.onUpdate(entity, document, id);
         return Response.noContent().build();
     }
@@ -92,7 +96,7 @@ public class DynamicEndpoint {
             @PathParam("entity") final String entity,
             @PathParam("id") final String id) {
 
-        var service = entryManager.invokeService(entity);
+        var service = endpointManager.invokeService(entity);
         service.onDelete(entity, id);
         return Response.noContent().build();
     }

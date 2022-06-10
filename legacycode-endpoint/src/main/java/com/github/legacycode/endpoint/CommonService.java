@@ -11,8 +11,12 @@ import com.github.legacycode.endpoint.internal.DAO;
 @Transactional
 public class CommonService extends AbstractService {
 
+    CommonService() {
+        super(null, null);
+    }
+
     @Inject
-    public CommonService(final EntryManager entryManager, final DAO dao) {
-        super(entryManager, dao);
+    public CommonService(final EndpointManager endpointManager, final DAO dao) {
+        super(endpointManager, dao);
     }
 }

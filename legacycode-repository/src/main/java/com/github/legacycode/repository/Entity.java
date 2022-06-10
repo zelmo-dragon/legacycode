@@ -1,4 +1,4 @@
-package com.github.legacycode.jakarta;
+package com.github.legacycode.repository;
 
 public interface Entity<K> {
 

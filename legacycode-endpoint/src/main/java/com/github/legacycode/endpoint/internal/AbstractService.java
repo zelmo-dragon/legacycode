@@ -7,32 +7,33 @@ import jakarta.json.JsonObject;
 
 import com.github.legacycode.endpoint.Action;
 import com.github.legacycode.endpoint.ActionDeniedException;
-import com.github.legacycode.endpoint.EndpointService;
+import com.github.legacycode.endpoint.EndpointEntry;
 import com.github.legacycode.endpoint.EndpointException;
-import com.github.legacycode.endpoint.EntityEntry;
+import com.github.legacycode.endpoint.EndpointManager;
+import com.github.legacycode.endpoint.EndpointService;
 import com.github.legacycode.endpoint.EntityMapper;
-import com.github.legacycode.endpoint.EntryManager;
 import com.github.legacycode.endpoint.Jsons;
 import com.github.legacycode.endpoint.PaginationData;
 
+
 public abstract class AbstractService implements EndpointService {
 
-    protected final EntryManager entryManager;
+    protected final EndpointManager endpointManager;
     protected final DAO dao;
 
-    protected AbstractService(final EntryManager entryManager, final DAO dao) {
-        this.entryManager = entryManager;
+    protected AbstractService(final EndpointManager endpointManager, final DAO dao) {
+        this.endpointManager = endpointManager;
         this.dao = dao;
     }
 
     @Override
     public <E, D, M extends EntityMapper<E, D>> PaginationData<D> onFilter(final String name, final Map<String, List<String>> parameters) {
 
-        var entry = this.entryManager.<E, D, M, AbstractService>resolve(name);
+        var entry = this.endpointManager.<E, D, M, AbstractService>resolve(name);
         checkAction(entry, Action.FILTER);
 
         var entityClass = entry.getEntityClass();
-        var mapper = this.entryManager.invokeMapper(entry);
+        var mapper = this.endpointManager.invokeMapper(entry);
         var queries = Queries.extractQueries(parameters);
 
         var entities = this.dao.find(entityClass, queries);
@@ -56,11 +57,11 @@ public abstract class AbstractService implements EndpointService {
     @Override
     public <E, D, M extends EntityMapper<E, D>> Optional<D> onFind(final String name, final String id) {
 
-        var entry = this.entryManager.<E, D, M, AbstractService>resolve(name);
+        var entry = this.endpointManager.<E, D, M, AbstractService>resolve(name);
         checkAction(entry, Action.FIND);
 
         var entityClass = entry.getEntityClass();
-        var mapper = this.entryManager.invokeMapper(entry);
+        var mapper = this.endpointManager.invokeMapper(entry);
 
         return this.dao
                 .find(entityClass, id)
@@ -70,11 +71,11 @@ public abstract class AbstractService implements EndpointService {
     @Override
     public <E, D, M extends EntityMapper<E, D>, K> K onCreate(final String name, final JsonObject document) {
 
-        var entry = this.entryManager.<E, D, M, AbstractService>resolve(name);
+        var entry = this.endpointManager.<E, D, M, AbstractService>resolve(name);
         checkAction(entry, Action.CREATE);
 
         var dataClass = entry.getDataClass();
-        var mapper = this.entryManager.invokeMapper(entry);
+        var mapper = this.endpointManager.invokeMapper(entry);
 
         var data = Jsons.parse(dataClass, document);
         var entity = mapper.toEntity(data);
@@ -91,12 +92,12 @@ public abstract class AbstractService implements EndpointService {
     @Override
     public <E, D, M extends EntityMapper<E, D>> void onUpdate(final String name, final JsonObject document, final String id) {
 
-        var entry = this.entryManager.<E, D, M, AbstractService>resolve(name);
+        var entry = this.endpointManager.<E, D, M, AbstractService>resolve(name);
         checkAction(entry, Action.UPDATE);
 
         var entityClass = entry.getEntityClass();
         var dataClass = entry.getDataClass();
-        var mapper = this.entryManager.invokeMapper(entry);
+        var mapper = this.endpointManager.invokeMapper(entry);
 
         var data = Jsons.parse(dataClass, document);
         var entity = this.dao
@@ -110,14 +111,14 @@ public abstract class AbstractService implements EndpointService {
     @Override
     public <E, D, M extends EntityMapper<E, D>> void onDelete(final String name, final String id) {
 
-        var entry = this.entryManager.<E, D, M, AbstractService>resolve(name);
+        var entry = this.endpointManager.<E, D, M, AbstractService>resolve(name);
         checkAction(entry, Action.DELETE);
 
         var entityClass = entry.getEntityClass();
         this.dao.remove(entityClass, id);
     }
 
-    protected static void checkAction(final EntityEntry<?, ?, ?, ?> entry, final Action action) {
+    protected static void checkAction(final EndpointEntry<?, ?, ?, ?> entry, final Action action) {
         if (!entry.getActions().contains(action)) {
             throw new ActionDeniedException(action);
         }

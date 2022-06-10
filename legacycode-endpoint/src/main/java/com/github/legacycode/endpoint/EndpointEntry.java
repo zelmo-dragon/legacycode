@@ -3,7 +3,7 @@ package com.github.legacycode.endpoint;
 import java.util.Objects;
 import java.util.Set;
 
-public class EntityEntry<E, D, M extends EntityMapper<E, D>, S extends EndpointService> {
+public class EndpointEntry<E, D, M extends EntityMapper<E, D>, S extends EndpointService> {
 
     private final String name;
 
@@ -17,7 +17,7 @@ public class EntityEntry<E, D, M extends EntityMapper<E, D>, S extends EndpointS
 
     private final Class<S> serviceClass;
 
-    public EntityEntry(
+    public EndpointEntry(
             final String name,
             final Set<Action> actions,
             final Class<E> entityClass,
@@ -41,7 +41,7 @@ public class EntityEntry<E, D, M extends EntityMapper<E, D>, S extends EndpointS
         } else if (obj == null || getClass() != obj.getClass()) {
             eq = false;
         } else {
-            var entry = (EntityEntry) obj;
+            var entry = (EndpointEntry) obj;
             eq = Objects.equals(name, entry.name)
                     && Objects.equals(actions, entry.actions)
                     && Objects.equals(entityClass, entry.entityClass)

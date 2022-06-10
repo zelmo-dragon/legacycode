@@ -1,4 +1,4 @@
-package com.github.legacycode.jakarta;
+package com.github.legacycode.repository;
 
 import jakarta.enterprise.inject.Produces;
 import jakarta.inject.Singleton;

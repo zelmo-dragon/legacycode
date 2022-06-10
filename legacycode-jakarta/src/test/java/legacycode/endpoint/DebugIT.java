@@ -1,6 +1,7 @@
 package legacycode.endpoint;
 
 import io.restassured.RestAssured;
+import legacycode.util.WebContext;
 import org.junit.jupiter.api.Test;
 
 public class DebugIT {
@@ -13,7 +14,7 @@ public class DebugIT {
 
         RestAssured
                 .when()
-                .get("http://localhost:8080")
+                .get(WebContext.BASE_URL)
                 .then()
                 .assertThat()
                 .statusCode(200);
@@ -23,7 +24,7 @@ public class DebugIT {
     public void testApplicationIsOnline() {
         RestAssured
                 .when()
-                .get("http://localhost:8080/legacycode")
+                .get(WebContext.APP_BASE_URL)
                 .then()
                 .assertThat()
                 .statusCode(200);

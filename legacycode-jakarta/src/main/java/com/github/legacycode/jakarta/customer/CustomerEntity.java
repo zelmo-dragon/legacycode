@@ -14,7 +14,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-import com.github.legacycode.jakarta.AbstractEntity;
+import com.github.legacycode.repository.AbstractEntity;
 import com.github.legacycode.jakarta.gender.GenderEntity;
 
 @Entity
@@ -40,15 +40,16 @@ public class CustomerEntity extends AbstractEntity {
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
+    @NotBlank
+    @Size(max = 255)
+    @Column(name = "phone_number", nullable = false)
+    private String phoneNumber;
+
     @NotNull
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH})
     @JoinColumn(name = "gender_id", nullable = false)
     private GenderEntity gender;
 
-    @NotBlank
-    @Size(max = 255)
-    @Column(name = "phone_number", nullable = false)
-    private String phoneNumber;
 
     public CustomerEntity() {
     }
@@ -77,19 +78,19 @@ public class CustomerEntity extends AbstractEntity {
         this.email = email;
     }
 
-    public GenderEntity getGender() {
-        return gender;
-    }
-
-    public void setGender(final GenderEntity gender) {
-        this.gender = gender;
-    }
-
     public String getPhoneNumber() {
         return phoneNumber;
     }
 
     public void setPhoneNumber(final String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public GenderEntity getGender() {
+        return gender;
+    }
+
+    public void setGender(final GenderEntity gender) {
+        this.gender = gender;
     }
 }

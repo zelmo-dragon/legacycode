@@ -1,4 +1,4 @@
-package com.github.legacycode.jakarta;
+package com.github.legacycode.endpoint;
 
 import jakarta.ws.rs.ApplicationPath;
 import jakarta.ws.rs.core.Application;
