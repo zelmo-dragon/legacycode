@@ -4,29 +4,38 @@ import java.util.UUID;
 import jakarta.json.bind.annotation.JsonbProperty;
 import jakarta.json.bind.annotation.JsonbPropertyOrder;
 import jakarta.json.bind.config.PropertyOrderStrategy;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 import com.github.legacycode.sample.gender.GenderDTO;
 
 
 @JsonbPropertyOrder(PropertyOrderStrategy.LEXICOGRAPHICAL)
+@XmlRootElement
 public class CustomerDTO {
 
     @JsonbProperty("id")
+    @XmlElement(name = "id")
     private UUID id;
 
     @JsonbProperty("givenName")
+    @XmlElement(name = "givenName")
     private String givenName;
 
     @JsonbProperty("familyName")
+    @XmlElement(name = "familyName")
     private String familyName;
 
     @JsonbProperty("email")
+    @XmlElement(name = "email")
     private String email;
 
     @JsonbProperty("phoneNumber")
+    @XmlElement(name = "phoneNumber")
     private String phoneNumber;
 
     @JsonbProperty("gender")
+    @XmlElement(name = "gender")
     private GenderDTO gender;
 
     public CustomerDTO() {
