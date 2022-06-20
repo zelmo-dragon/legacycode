@@ -1,7 +1,8 @@
 package com.github.legacycode.internal.persistence.jdbc;
 
-import com.github.legacycode.core.Identifiable;
-import com.github.legacycode.core.common.DynamicRepository;
+import com.github.legacycode.core.repository.DynamicRepository;
+import com.github.legacycode.core.repository.Identifiable;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,16 +19,16 @@ public final class DynamicDAO implements DynamicRepository {
     }
 
     @Override
-    public <E extends Identifiable<K>, K> void add(
-            final Class<E> entityClass, 
+    public <K, E extends Identifiable<K>> void add(
+            final Class<E> entityClass,
             final E entity) {
-        
+
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public <E extends Identifiable<K>, K> void remove(
-            final Class<E> entityClass, 
+    public <K, E extends Identifiable<K>> void remove(
+            final Class<E> entityClass,
             final K key) {
 
         var queryTemplate = String.format(
@@ -53,8 +54,8 @@ public final class DynamicDAO implements DynamicRepository {
     }
 
     @Override
-    public <E extends Identifiable<K>, K> boolean contains(
-            final Class<E> entityClass, 
+    public <K, E extends Identifiable<K>> boolean contains(
+            final Class<E> entityClass,
             final K key) {
 
         var queryTemplate = String.format(
@@ -83,10 +84,10 @@ public final class DynamicDAO implements DynamicRepository {
     }
 
     @Override
-    public <E extends Identifiable<K>, K> Optional<E> find(
-            final Class<E> entityClass, 
+    public <K, E extends Identifiable<K>> Optional<E> find(
+            final Class<E> entityClass,
             final K key) {
-        
+
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

@@ -11,7 +11,10 @@ import jakarta.persistence.PersistenceException;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.metamodel.SingularAttribute;
 
-public abstract class AbstractMapDAO<K, E> implements Map<K, E> {
+import com.github.legacycode.core.repository.Identifiable;
+import com.github.legacycode.core.repository.Repository;
+
+public abstract class AbstractMapDAO<K, E extends Identifiable<K>> implements Repository<K, E> {
 
     protected final EntityManager em;
 
@@ -19,12 +22,14 @@ public abstract class AbstractMapDAO<K, E> implements Map<K, E> {
         this.em = em;
     }
 
+    @Override
     public Optional<E> find(K id) {
         return Optional
                 .ofNullable(id)
                 .map(this::get);
     }
 
+    @Override
     public void put(E entity) {
         var id = this.getPrimaryKey(entity);
         this.put(id, entity);

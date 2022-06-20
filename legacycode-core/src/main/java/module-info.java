@@ -4,7 +4,8 @@ module legacy.core {
     requires java.sql;
 
     exports com.github.legacycode.core;
-    exports com.github.legacycode.core.common;
+    exports com.github.legacycode.core.repository;
+    exports com.github.legacycode.core.service;
     exports com.github.legacycode.core.customer;
     exports com.github.legacycode.core.gender;
     exports com.github.legacycode.core.util;

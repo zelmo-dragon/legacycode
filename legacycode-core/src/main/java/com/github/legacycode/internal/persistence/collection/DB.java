@@ -21,10 +21,10 @@ final class DB {
         return INSTANCE;
     }
 
-    <E> void put(final Class<E> entityClass, final Set<E> data) {
+    <E> E put(final Class<E> entityClass, final Set<E> data) {
         var internalData = this.database.getOrDefault(entityClass, new HashSet<>(data.size()));
         internalData.addAll(data);
-        this.database.put(entityClass, internalData);
+        return (E) this.database.put(entityClass, internalData);
     }
 
     <E> void remove(final Class<E> entityClass) {

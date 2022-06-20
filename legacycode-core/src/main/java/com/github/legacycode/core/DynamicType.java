@@ -1,13 +1,13 @@
-package com.github.legacycode.core.common;
+package com.github.legacycode.core;
 
-import com.github.legacycode.core.gender.GenderService;
-import com.github.legacycode.core.gender.GenderRepository;
-import com.github.legacycode.core.Identifiable;
-import com.github.legacycode.core.Repository;
 import com.github.legacycode.core.customer.Customer;
 import com.github.legacycode.core.customer.CustomerRepository;
 import com.github.legacycode.core.customer.CustomerService;
 import com.github.legacycode.core.gender.Gender;
+import com.github.legacycode.core.gender.GenderRepository;
+import com.github.legacycode.core.gender.GenderService;
+import com.github.legacycode.core.repository.Identifiable;
+import com.github.legacycode.core.repository.Repository;
 
 public enum DynamicType {
 

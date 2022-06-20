@@ -1,17 +1,19 @@
-package com.github.legacycode.core.common;
+package com.github.legacycode.core.service;
 
+import com.github.legacycode.core.repository.Identifiable;
 import com.github.legacycode.core.LegacyCode;
-import com.github.legacycode.core.Identifiable;
+import com.github.legacycode.core.repository.DynamicRepository;
+import com.github.legacycode.core.DynamicType;
 
 public interface DynamicService {
 
-    default <E extends Identifiable<K>, K> K create(
+    default <K, E extends Identifiable<K>> K create(
             final DynamicType targetType,
             final E entity) {
 
         var repository = DynamicService.getRepository();
         var entityClass = targetType.<E, K>getEntityClass();
-        var key = entity.getKey();
+        var key = entity.getId();
         var exists = repository.contains(entityClass, key);
         if (exists) {
             var message = String.format("Entity '%s' with key '%s' already exists", entity, key);
@@ -22,7 +24,7 @@ public interface DynamicService {
         return key;
     }
 
-    default <E extends Identifiable<K>, K> E read(
+    default <K, E extends Identifiable<K>> E read(
             final DynamicType targetType,
             final K key) {
 
@@ -39,13 +41,13 @@ public interface DynamicService {
                 .orElseThrow(() -> new ServiceException(message));
     }
 
-    default <E extends Identifiable<K>, K> K update(
+    default <K, E extends Identifiable<K>> K update(
             final DynamicType targetType,
             final E entity) {
 
         var repository = DynamicService.getRepository();
         var entityClass = targetType.<E, K>getEntityClass();
-        var key = entity.getKey();
+        var key = entity.getId();
         var exists = repository.contains(entityClass, key);
         if (!exists) {
             var message = String.format("Entity '%s' with key '%s' not exists", entity, key);
@@ -56,7 +58,7 @@ public interface DynamicService {
         return key;
     }
 
-    default <E extends Identifiable<K>, K> void delete(
+    default <K, E extends Identifiable<K>> void delete(
             final DynamicType targetType,
             final K key) {
 

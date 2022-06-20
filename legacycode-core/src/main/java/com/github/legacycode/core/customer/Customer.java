@@ -4,7 +4,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 
-import com.github.legacycode.core.Identifiable;
+import com.github.legacycode.core.repository.Identifiable;
 import com.github.legacycode.core.util.lang.Empty;
 import com.github.legacycode.core.util.lang.Equals;
 import com.github.legacycode.core.util.lang.ToString;
@@ -88,13 +88,9 @@ public final class Customer implements Identifiable<UUID> {
                 .apply(this);
     }
 
-    @Override
-    public UUID getKey() {
-        return this.id;
-    }
-
     // Accesseurs
 
+    @Override
     public UUID getId() {
         return id;
     }

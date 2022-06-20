@@ -1,4 +1,4 @@
-package com.github.legacycode.core.common;
+package com.github.legacycode.core.service;
 
 final class ServiceException extends RuntimeException {
 

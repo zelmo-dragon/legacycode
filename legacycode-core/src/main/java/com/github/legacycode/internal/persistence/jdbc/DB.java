@@ -1,6 +1,7 @@
 package com.github.legacycode.internal.persistence.jdbc;
 
 import com.github.legacycode.core.LegacyCode;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,7 +24,7 @@ final class DB {
     }
 
     int executeUpdate(final String query) {
-        try ( 
+        try (
                 var connection = this.database.getConnection();
                 var statement = connection.prepareStatement(query)) {
 
@@ -32,15 +33,15 @@ final class DB {
             throw new IllegalStateException(ex);
         }
     }
-    
+
     int executeUpdate(
             final String query,
             final Consumer<PreparedStatement> bind) {
-        
-        try ( 
+
+        try (
                 var connection = this.database.getConnection();
                 var statement = connection.prepareStatement(query)) {
-                bind.accept(statement);
+            bind.accept(statement);
 
             return statement.executeUpdate();
         } catch (SQLException ex) {
@@ -49,17 +50,34 @@ final class DB {
     }
 
     <E> E execute(
-            final String query, 
+            final String query,
             final Consumer<PreparedStatement> bind,
-            final Function<ResultSet,E> extractor) {
+            final Function<ResultSet, E> extractor) {
 
-        try ( 
-                var connection = this.database.getConnection();  
+        try (
+                var connection = this.database.getConnection();
+                var statement = connection.prepareStatement(query)) {
+
+            bind.accept(statement);
+            try (var result = statement.executeQuery()) {
+                return extractor.apply(result);
+            }
+        } catch (SQLException ex) {
+            throw new IllegalStateException(ex);
+        }
+    }
+
+    <E> E execute(
+            final String query,
+            final Function<ResultSet, E> extractor) {
+
+        try (
+                var connection = this.database.getConnection();
                 var statement = connection.prepareStatement(query);
                 var result = statement.executeQuery()) {
-            
+
             return extractor.apply(result);
-            
+
         } catch (SQLException ex) {
             throw new IllegalStateException(ex);
         }

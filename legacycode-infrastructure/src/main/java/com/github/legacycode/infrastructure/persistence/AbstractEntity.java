@@ -9,8 +9,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.Version;
 
+import com.github.legacycode.core.repository.Identifiable;
+
 @MappedSuperclass
-public abstract class AbstractEntity implements Entity<UUID>, Serializable {
+public abstract class AbstractEntity implements Identifiable<UUID>, Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -53,7 +55,6 @@ public abstract class AbstractEntity implements Entity<UUID>, Serializable {
         return id;
     }
 
-    @Override
     public void setId(final UUID id) {
         this.id = id;
     }

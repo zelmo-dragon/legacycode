@@ -1,8 +1,9 @@
 package com.github.legacycode.internal.persistence.jdbc;
 
-import com.github.legacycode.core.Identifiable;
 import com.github.legacycode.core.customer.Customer;
 import com.github.legacycode.core.gender.Gender;
+import com.github.legacycode.core.repository.Identifiable;
+
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
 import java.util.Objects;
