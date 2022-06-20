@@ -5,10 +5,10 @@ import jakarta.enterprise.context.Initialized;
 import jakarta.enterprise.event.Observes;
 import jakarta.inject.Inject;
 
-import com.github.legacycode.endpoint.Action;
-import com.github.legacycode.endpoint.CommonService;
-import com.github.legacycode.endpoint.EndpointEntry;
-import com.github.legacycode.endpoint.EndpointManager;
+import com.github.legacycode.infrastructure.search.Action;
+import com.github.legacycode.infrastructure.search.CommonService;
+import com.github.legacycode.infrastructure.search.EndpointEntry;
+import com.github.legacycode.infrastructure.search.EndpointManager;
 import com.github.legacycode.sample.customer.CustomerDTO;
 import com.github.legacycode.sample.customer.CustomerEntity;
 import com.github.legacycode.sample.customer.CustomerMapper;

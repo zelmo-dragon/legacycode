@@ -1,5 +1,6 @@
 package com.github.legacycode.sample.customer;
 
+import java.util.Objects;
 import java.util.UUID;
 import jakarta.json.bind.annotation.JsonbProperty;
 import jakarta.json.bind.annotation.JsonbPropertyOrder;
@@ -7,6 +8,7 @@ import jakarta.json.bind.config.PropertyOrderStrategy;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 
+import com.github.legacycode.infrastructure.persistence.AbstractEntity;
 import com.github.legacycode.sample.gender.GenderDTO;
 
 
@@ -39,6 +41,30 @@ public class CustomerDTO {
     private GenderDTO gender;
 
     public CustomerDTO() {
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        boolean eq;
+        if (this == o) {
+            eq = true;
+        } else if (o == null || getClass() != o.getClass()) {
+            eq = false;
+        } else {
+            var that = (CustomerDTO) o;
+            eq = Objects.equals(id, that.id)
+                    && Objects.equals(givenName, that.givenName)
+                    && Objects.equals(familyName, that.familyName)
+                    && Objects.equals(email, that.email)
+                    && Objects.equals(phoneNumber, that.phoneNumber)
+                    && Objects.equals(gender, that.gender);
+        }
+        return eq;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, givenName, familyName, email, phoneNumber, gender);
     }
 
     public UUID getId() {

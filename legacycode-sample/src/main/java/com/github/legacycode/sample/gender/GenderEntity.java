@@ -1,5 +1,6 @@
 package com.github.legacycode.sample.gender;
 
+import java.io.Serial;
 import jakarta.persistence.Access;
 import jakarta.persistence.AccessType;
 import jakarta.persistence.Column;
@@ -9,13 +10,14 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-import com.github.legacycode.repository.AbstractEntity;
+import com.github.legacycode.infrastructure.persistence.AbstractEntity;
 
 @Entity
 @Table(name = "gender")
 @Access(AccessType.FIELD)
 public class GenderEntity extends AbstractEntity {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @NotBlank

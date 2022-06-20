@@ -9,12 +9,12 @@
     <parent>
         <groupId>com.github.legacycode</groupId>
         <artifactId>legacycode</artifactId>
-        <version>0.0.2-SNAPSHOT</version>
+        <version>0.0.3-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>legacycode-core</artifactId>
-    <version>${project.parent.version}</version>
+    <version>0.0.3-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>legacycode-core</name>
 

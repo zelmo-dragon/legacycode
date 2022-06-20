@@ -3,7 +3,7 @@ package com.github.legacycode.sample.gender;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
-import com.github.legacycode.endpoint.EntityMapper;
+import com.github.legacycode.infrastructure.search.EntityMapper;
 
 @Singleton
 public class GenderMapper implements EntityMapper<GenderEntity, GenderDTO> {

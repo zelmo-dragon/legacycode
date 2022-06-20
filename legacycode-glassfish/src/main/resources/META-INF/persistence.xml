@@ -13,8 +13,8 @@
         <validation-mode>CALLBACK</validation-mode>
 
         <!-- Dépendances externes -->
-        <class>com.github.legacycode.repository.UUIDConverter</class>
-        <class>com.github.legacycode.repository.AbstractEntity</class>
+        <class>com.github.legacycode.infrastructure.persistence.UUIDConverter</class>
+        <class>com.github.legacycode.infrastructure.persistence.AbstractEntity</class>
         <class>com.github.legacycode.sample.customer.CustomerEntity</class>
         <class>com.github.legacycode.sample.gender.GenderEntity</class>
 

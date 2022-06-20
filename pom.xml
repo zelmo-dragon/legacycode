@@ -41,15 +41,14 @@
 
     <groupId>com.github.legacycode</groupId>
     <artifactId>legacycode</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.0.3-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>legacycode</name>
 
     <modules>
         <module>legacycode-core</module>
+        <module>legacycode-infrastructure</module>
         <module>legacycode-sample</module>
-        <module>legacycode-repository</module>
-        <module>legacycode-endpoint</module>
         <module>legacycode-glassfish</module>
     </modules>
 

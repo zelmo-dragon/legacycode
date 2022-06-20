@@ -15,7 +15,7 @@ public interface DynamicService {
         var exists = repository.contains(entityClass, key);
         if (exists) {
             var message = String.format("Entity '%s' with key '%s' already exists", entity, key);
-            throw new ServiceCreateException(message);
+            throw new ServiceException(message);
         }
         repository.add(entityClass, entity);
 
@@ -36,7 +36,7 @@ public interface DynamicService {
 
         return repository
                 .find(entityClass, key)
-                .orElseThrow(() -> new ServiceReadException(message));
+                .orElseThrow(() -> new ServiceException(message));
     }
 
     default <E extends Identifiable<K>, K> K update(
@@ -49,7 +49,7 @@ public interface DynamicService {
         var exists = repository.contains(entityClass, key);
         if (!exists) {
             var message = String.format("Entity '%s' with key '%s' not exists", entity, key);
-            throw new ServiceUpdateException(message);
+            throw new ServiceException(message);
         }
         repository.add(entityClass, entity);
 
@@ -65,7 +65,7 @@ public interface DynamicService {
         var exists = repository.contains(entityClass, key);
         if (!exists) {
             var message = String.format("Unknown entity '%s' with key '%s'", entityClass, key);
-            throw new ServiceRemoveException(message);
+            throw new ServiceException(message);
         }
         repository.remove(entityClass, key);
     }

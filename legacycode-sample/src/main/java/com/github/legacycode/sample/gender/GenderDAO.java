@@ -5,7 +5,7 @@ import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import jakarta.persistence.EntityManager;
 
-import com.github.legacycode.repository.AbstractMapDAO;
+import com.github.legacycode.infrastructure.persistence.AbstractMapDAO;
 
 @Singleton
 public class GenderDAO extends AbstractMapDAO<UUID, GenderEntity> {

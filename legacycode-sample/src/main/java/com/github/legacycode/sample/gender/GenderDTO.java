@@ -1,11 +1,14 @@
 package com.github.legacycode.sample.gender;
 
+import java.util.Objects;
 import java.util.UUID;
 import jakarta.json.bind.annotation.JsonbProperty;
 import jakarta.json.bind.annotation.JsonbPropertyOrder;
 import jakarta.json.bind.config.PropertyOrderStrategy;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
+
+import com.github.legacycode.infrastructure.persistence.AbstractEntity;
 
 @JsonbPropertyOrder(PropertyOrderStrategy.LEXICOGRAPHICAL)
 @XmlRootElement
@@ -28,6 +31,28 @@ public class GenderDTO {
     private String description;
 
     public GenderDTO() {
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        boolean eq;
+        if (this == o) {
+            eq = true;
+        } else if (o == null || getClass() != o.getClass()) {
+            eq = false;
+        } else {
+            var that = (GenderDTO) o;
+            eq = Objects.equals(id, that.id)
+                    && Objects.equals(name, that.name)
+                    && Objects.equals(code, that.code)
+                    && Objects.equals(description, that.description) ;
+        }
+        return eq;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, code, description);
     }
 
     public UUID getId() {
